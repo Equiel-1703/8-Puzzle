@@ -1,0 +1,10 @@
+{
+  "C_Cpp.errorSquiggles": "Enabled",
+  "files.associations": {
+    "windows.h": "c",
+    "stdpuzzle.h": "c",
+    "stdio.h": "c"
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "ms-vscode.cpptools"
+}
