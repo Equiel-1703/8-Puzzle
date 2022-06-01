@@ -240,6 +240,7 @@ int main()
 
     // Input do usuário
     char usrInput;
+    int quantMov = 0;
     while (true)
     {
         setCmdCursor(0, 0, hConsole);
@@ -248,7 +249,7 @@ int main()
         switch (usrInput)
         {
         case ' ':
-            doMove(board1, TAM, &usrSelection);
+            doMove(board1, TAM, &usrSelection, &quantMov);
             break;
 
         default:
@@ -258,7 +259,7 @@ int main()
         if (comparaArray(board1, gabarito, TAM))
             break;
 
-        printf("\n%c\n", usrInput); // Mostrar o que o usuário está pressionando
+        printf("\n%d\n", quantMov); // Mostrar a quantidade de movimentos realizados
     }
     free(board1);
     system("cls");
