@@ -233,21 +233,46 @@ void embaralharBoard(int *board, size_t tamanho, int num)
 {
     srand(time(0));
 
-    for (int i = 0; i < tamanho * num; i++)
+    do
     {
-        int lin1, col1, lin2, col2, temp;
+        for (int i = 0; i < tamanho * num; i++)
+        {
+            int lin1, col1, lin2, col2, temp;
 
-        lin1 = rand() % tamanho;
-        col1 = rand() % tamanho;
+            lin1 = rand() % tamanho;
+            col1 = rand() % tamanho;
 
-        temp = board[lin1 * tamanho + col1];
+            temp = board[lin1 * tamanho + col1];
 
-        lin2 = rand() % tamanho;
-        col2 = rand() % tamanho;
+            lin2 = rand() % tamanho;
+            col2 = rand() % tamanho;
 
-        board[lin1 * tamanho + col1] = board[lin2 * tamanho + col2];
-        board[lin2 * tamanho + col2] = temp;
-    }
+            board[lin1 * tamanho + col1] = board[lin2 * tamanho + col2];
+            board[lin2 * tamanho + col2] = temp;
+        }
+    } while (!isSolvable(board, tamanho));
+}
+
+// Conta o numero de inversões do "arr"
+int getInvCount(int *arr, int tam)
+{
+    int inv_count = 0;
+    for (int i = 0; i < (tam * tam) - 1; i++)
+        for (int j = i + 1; j < (tam * tam); j++)
+            // 0 é usado para o espaço vazio
+            if (arr[j] && arr[i] && arr[i] > arr[j])
+                inv_count++;
+    return inv_count;
+}
+
+// Essa função determina se o tabuleiro tem solução
+bool isSolvable(int *puzzle, int tam)
+{
+    // Conta as inversões
+    int invCount = getInvCount(puzzle, tam);
+
+    // Retorna true se for par (possível) e false se não for
+    return (invCount % 2 == 0);
 }
 
 // Lê os comandos do usuário para selecionar uma posição no tabuleiro

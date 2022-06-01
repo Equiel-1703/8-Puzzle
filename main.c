@@ -230,7 +230,7 @@ int main()
 
     // Cria e embaralha a matriz do tabuleiro
     int *board1 = createBoard(TAM);
-    embaralharBoard(board1, TAM, 2);
+    embaralharBoard(board1, TAM, 1);
     usrSelecBoard usrSelection = createUsrSelectionBoard(TAM, board1);
     // Exibe o tabuleiro na tela
     showBoard(board1, usrSelection.usrSelecBoard, TAM, hConsole);

@@ -53,6 +53,10 @@ void setFontAndWindowSize(HANDLE hConsole, int fontSize, int BufferX, int Buffer
 void creditos(void);
 void timer(int tempo);
 
+// Funções de embaralhamento
+int getInvCount(int *arr, int tam);
+bool isSolvable(int *puzzle, int tam);
+
 BOOL WINAPI SetCurrentConsoleFontEx(HANDLE hConsoleOutput, BOOL bMaximumWindow, PCONSOLE_FONT_INFOEX lpConsoleCurrentFontEx);
 
 #endif // STDPUZZLE_H_INCLUDED
