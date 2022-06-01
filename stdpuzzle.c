@@ -327,32 +327,18 @@ movimentosPossiveis possibleMoves(BYTE *selecBoard, size_t tam)
 }
 
 // Realiza o movimento, se for possível, atualizando o tabuleiro
-int doMove(int *board, size_t tam, int posXO, int posYO, movimentosPossiveis mov)
+int doMove(int *board, size_t tam, usrSelecBoard *boardSel)
 {
-
     COORD coord0 = get0position(board, tam);
     int aux;
-
-    if (mov.up == true)
-        if (posYO - 1 == coord0.Y)
-        {
-            printf("A posicao selecionada pode ir para cima // está abaixo do 0");
-            aux = board[posYO * tam + posXO];
-            board[posYO * tam + posXO] = board[coord0.Y * tam + coord0.X];
-            board[coord0.Y * tam + coord0.X] = aux;
-        }
-
-    if (mov.down == true)
-        if (posYO + 1 == coord0.Y)
-            printf("A posicao selecionada pode ir para baixo // está acima do 0");
-
-    if (mov.left == true)
-        if (posXO + 1 == coord0.X)
-            printf("A posicao selecionada pode ir para a direita // está a esquerda do 0");
-
-    if (mov.right == true)
-        if (posXO + 1 == coord0.X)
-            printf("A posicao selecionada pode ir para a esquerda // está a direita do 0");
+    int selX = boardSel->selecPos.X;
+    int selY = boardSel->selecPos.Y;
+    if (selY + 1 == coord0.Y && selX == coord0.X || selY - 1 == coord0.Y && selX == coord0.X || selX + 1 == coord0.X && selY == coord0.Y || selX - 1 == coord0.X && selY == coord0.Y)
+    {
+        aux = board[selY * tam + selX];
+        board[selY * tam + selX] = board[coord0.Y * tam + coord0.X];
+        board[coord0.Y * tam + coord0.X] = aux;
+    }
 }
 
 // Retorna coordenada do 0 na matriz
