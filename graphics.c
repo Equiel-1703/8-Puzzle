@@ -355,7 +355,7 @@ void setFontAndWindowSize(HANDLE hConsole, int fontSize, int BufferX, int Buffer
 
 // ======================================= FUNÇÕES AUXILIARES =======================================
 
-// Função que imprime o texto colorido na tela e depois restaura para a cor padrão
+// Função que imprime colorido a coordenada da board na tela e depois restaura para a cor padrão
 void printColored(HANDLE hConsole, int *board, int linha, int coluna, size_t tamanho, WORD atributo)
 {
     CONSOLE_SCREEN_BUFFER_INFO consoleInfo;

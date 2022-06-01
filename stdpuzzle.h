@@ -27,23 +27,28 @@ typedef struct _CONSOLE_FONT_INFOEX
 } CONSOLE_FONT_INFOEX, *PCONSOLE_FONT_INFOEX;
 
 // Funções de menu do jogo
+
 void creditos(void);
 
 // Funções do tabuleiro
+
 int *createBoard(size_t tamanho);
 usrSelecBoard createUsrSelectionBoard(size_t tamanho, int *board);
 void doMove(int *board, size_t tam, usrSelecBoard *boardSel);
 void readSelectPosition(char usrInput, int *board, usrSelecBoard *selecBoard, size_t tamanho);
 
 // Funções de embaralhamento
+
 void embaralharBoard(int *board, size_t tamanho, int num);
 int getInvCount(int *arr, int tam);
 bool isSolvable(int *puzzle, int tam);
 
 // Funções auxiliares do tabuleiro
+
 COORD get0position(int *board, size_t tam);
 
 // Funções de gráficos
+
 void showBoard(int *board, BYTE *selecBoard, size_t tamanho, HANDLE hConsole);
 void showSPR(const char *arquivo, int startLine, int endLine, int lineSize);
 void showFala(char falaNum);
@@ -51,12 +56,14 @@ void setMainOutputSettings(HANDLE hConsole);
 void setFontAndWindowSize(HANDLE hConsole, int fontSize, int BufferX, int BufferY, bool Aumenta);
 
 // Funções auxiliares de gráficos
+
 void printColored(HANDLE hConsole, int *board, int linha, int coluna, size_t tamanho, WORD atributo);
 void setCmdCursor(int x, int y, HANDLE hConsole);
 void eraser(int lines, int colums, char eraserChar);
 void timer(int tempo);
 
 // Funções da API do Windows
+
 BOOL WINAPI SetCurrentConsoleFontEx(HANDLE hConsoleOutput, BOOL bMaximumWindow, PCONSOLE_FONT_INFOEX lpConsoleCurrentFontEx);
 
 #endif // STDPUZZLE_H_INCLUDED
