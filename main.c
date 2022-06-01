@@ -230,6 +230,7 @@ int main()
 
     // Cria e embaralha a matriz do tabuleiro
     int *board1 = createBoard(TAM);
+    const int *gabarito = createBoard(TAM);
     embaralharBoard(board1, TAM, 1);
     usrSelecBoard usrSelection = createUsrSelectionBoard(TAM, board1);
     // Exibe o tabuleiro na tela
@@ -254,7 +255,9 @@ int main()
             readSelectPosition(usrInput, board1, &usrSelection, TAM);
             break;
         }
-        // VERIFICAR SE A BOARD ESTA CERTA
+        if (comparaArray(board1, gabarito, TAM))
+            break;
+
         printf("\n%c\n", usrInput); // Mostrar o que o usuário está pressionando
     }
     free(board1);
