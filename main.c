@@ -244,7 +244,7 @@ int main()
         readSelectPosition(usrInput, board1, &usrSelection, TAM);
         setCmdCursor(0, 0, hConsole);
         showBoard(board1, usrSelection.usrSelecBoard, TAM, hConsole);
-        printf("\n%c\n", usrInput);
+        printf("\n%c\n", usrInput); // Mostrar o que o usuário está pressionando
     }
     free(board1);
     system("cls");
@@ -253,7 +253,7 @@ int main()
     // Formata a saída para os sprites
     setFontAndWindowSize(hConsole, 8, 201, 90, true);
 
-    // Posiciona o cursor e limpa a tela
+    // Posiciona o cursor
     setCmdCursor(0, 0, hConsole);
 
     showSPR("spr/q_angry.txt", 0, 78, 0xC9);
