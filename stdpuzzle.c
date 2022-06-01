@@ -43,21 +43,6 @@ int *createBoard(size_t tamanho)
     return board;
 }
 
-// Compara dois arrays de mesmo tamanho
-bool comparaArray(int *arr1, const int *arr2, size_t tamanho)
-{
-    bool isEqual = true;
-    for (int i = 0; i < tamanho * tamanho; i++)
-    {
-        if (arr1[i] != arr2[i] && isEqual == true)
-        {
-            isEqual = false;
-            break;
-        }
-    }
-    return isEqual;
-}
-
 // Cria uma matriz contendo a seleção de peça do usuario
 usrSelecBoard createUsrSelectionBoard(size_t tamanho, int *board)
 {
@@ -218,4 +203,19 @@ COORD get0position(int *board, size_t tam)
     }
 
     return coord;
+}
+
+// Compara dois arrays de mesmo tamanho
+bool comparaArray(int *arr1, const int *arr2, size_t tamanho)
+{
+    bool isEqual = true;
+    for (int i = 0; i < tamanho * tamanho; i++)
+    {
+        if (arr1[i] != arr2[i] && isEqual == true)
+        {
+            isEqual = false;
+            break;
+        }
+    }
+    return isEqual;
 }

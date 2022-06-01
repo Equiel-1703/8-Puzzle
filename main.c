@@ -61,6 +61,7 @@ int main()
 
     // Impossibilita o usuário de redimensionar a janela do jogo
     SetWindowLongPtr(wConsole, GWL_STYLE, GetWindowLong(wConsole, GWL_STYLE) & ~WS_MAXIMIZEBOX & ~WS_SIZEBOX);
+
     /*
         LONG_PTR SetWindowLongPtrA(HWND hWnd, int nIndex, LONG_PTR dwNewLong);
 
@@ -139,7 +140,7 @@ int main()
             exit(EXIT_SUCCESS);
             break;
 
-        default:
+        default: // Se não for um comando válido, só manda o cursor de volta pro 0,0
             setCmdCursor(0, 0, hConsole);
             break;
         }
@@ -155,72 +156,7 @@ int main()
     system("cls");
 
     // INTERAÇÃO 1
-    showSPR("spr/q_happy.txt", 0, 78, 0xC9);
-    setCmdCursor(0, 79, hConsole);
-    showFala('1'); // Rainha se apresenta
-
-    int repet = 0;
-    while (repet < 5)
-    {
-        timer(150);
-
-        setCmdCursor(0, 55, hConsole);
-        showSPR("spr/q_happy_closed.txt", 55, 59, 0xC9);
-
-        timer(150);
-
-        setCmdCursor(0, 55, hConsole);
-        showSPR("spr/q_happy.txt", 55, 59, 0xC9);
-
-        repet++;
-    }
-    getch();
-
-    setCmdCursor(0, 79, hConsole);
-    eraser(11, 200, ' ');
-    setCmdCursor(0, 79, hConsole);
-    showFala('2'); // Explica que deve derrotá-la para ser o novo rei/rainha
-
-    repet = 0;
-    while (repet < 10)
-    {
-        timer(150);
-
-        setCmdCursor(0, 55, hConsole);
-        showSPR("spr/q_happy.txt", 55, 59, 0xC9);
-
-        timer(150);
-
-        setCmdCursor(0, 55, hConsole);
-        showSPR("spr/q_happy_closed.txt", 55, 59, 0xC9);
-
-        repet++;
-    }
-    getch();
-
-    setCmdCursor(0, 0, hConsole);
-    showSPR("spr/q_challenging.txt", 0, 78, 0xC9); // Muda de sprite
-    setCmdCursor(0, 79, hConsole);
-    eraser(11, 200, ' ');
-    setCmdCursor(0, 79, hConsole);
-    showFala('3'); // Será que consegue??
-
-    repet = 0;
-    while (repet < 4)
-    {
-        timer(150);
-
-        setCmdCursor(0, 55, hConsole);
-        showSPR("spr/q_challenging.txt", 55, 59, 0xC9);
-
-        timer(150);
-
-        setCmdCursor(0, 55, hConsole);
-        showSPR("spr/q_happy_closed.txt", 55, 59, 0xC9);
-
-        repet++;
-    }
-    getch();
+    INTERACAO1(hConsole);
 
     system("cls");
 
@@ -244,6 +180,7 @@ int main()
     {
         setCmdCursor(0, 0, hConsole);
         showBoard(board1, usrSelection.usrSelecBoard, TAM, hConsole);
+
         usrInput = getch();
         switch (usrInput)
         {
@@ -255,41 +192,16 @@ int main()
             readSelectPosition(usrInput, board1, &usrSelection, TAM);
             break;
         }
+
+        // Verifica se o
         if (comparaArray(board1, gabarito, TAM))
             break;
-
-        printf("\n%c\n", usrInput); // Mostrar o que o usuário está pressionando
     }
     free(board1);
     system("cls");
 
     // INTERAÇÃO 2
-    // Formata a saída para os sprites
-    setFontAndWindowSize(hConsole, 8, 201, 90, true);
-
-    // Posiciona o cursor
-    setCmdCursor(0, 0, hConsole);
-
-    showSPR("spr/q_angry.txt", 0, 78, 0xC9);
-    setCmdCursor(0, 79, hConsole);
-    showFala('5'); // Não acredita que conseguiu
-
-    repet = 0;
-    while (repet < 5)
-    {
-        timer(150);
-
-        setCmdCursor(0, 55, hConsole);
-        showSPR("spr/q_angry.txt", 55, 59, 0xC9);
-
-        timer(150);
-
-        setCmdCursor(0, 55, hConsole);
-        showSPR("spr/q_angry_closed.txt", 55, 59, 0xC9);
-
-        repet++;
-    }
-    getch();
+    INTERACAO2(hConsole);
 
     return 0;
 }

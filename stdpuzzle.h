@@ -63,6 +63,11 @@ void eraser(int lines, int colums, char eraserChar);
 void timer(int tempo);
 bool comparaArray(int *arr1, const int *arr2, size_t tamanho);
 
+// Interações com a rainha
+
+void INTERACAO1(HANDLE hConsole);
+void INTERACAO2(HANDLE hConsole);
+
 // Funções da API do Windows
 
 BOOL WINAPI SetCurrentConsoleFontEx(HANDLE hConsoleOutput, BOOL bMaximumWindow, PCONSOLE_FONT_INFOEX lpConsoleCurrentFontEx);
