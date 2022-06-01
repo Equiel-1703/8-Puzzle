@@ -10,7 +10,7 @@
 #include "stdpuzzle.h"
 
 // TEST STUFF
-#define TAM 4
+#define TAM 3
 
 int main()
 {
