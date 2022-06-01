@@ -40,6 +40,7 @@ usrSelecBoard createUsrSelectionBoard(size_t tamanho, int *board);
 void showBoard(int *board, BYTE *selecBoard, size_t tamanho, HANDLE hConsole);
 void printColored(HANDLE hConsole, int *board, int linha, int coluna, size_t tamanho, WORD atributo);
 void embaralharBoard(int *board, size_t tamanho, int num);
+void doMove(int *board, size_t tam, usrSelecBoard *boardSel);
 void readSelectPosition(char usrInput, int *board, usrSelecBoard *selecBoard, size_t tamanho);
 void setCmdCursor(int x, int y, HANDLE hConsole);
 movimentosPossiveis possibleMoves(BYTE *selecBoard, size_t tam);
@@ -51,6 +52,10 @@ void eraser(int lines, int colums, char eraserChar);
 void setFontAndWindowSize(HANDLE hConsole, int fontSize, int BufferX, int BufferY, bool Aumenta);
 void creditos(void);
 void timer(int tempo);
+
+// Funções de embaralhamento
+int getInvCount(int *arr, int tam);
+bool isSolvable(int *puzzle, int tam);
 
 BOOL WINAPI SetCurrentConsoleFontEx(HANDLE hConsoleOutput, BOOL bMaximumWindow, PCONSOLE_FONT_INFOEX lpConsoleCurrentFontEx);
 
