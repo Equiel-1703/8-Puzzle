@@ -52,6 +52,7 @@ void eraser(int lines, int colums, char eraserChar);
 void setFontAndWindowSize(HANDLE hConsole, int fontSize, int BufferX, int BufferY, bool Aumenta);
 void creditos(void);
 void timer(int tempo);
+bool comparaArray(int *arr1, const int *arr2, size_t tamanho);
 
 // Funções de embaralhamento
 int getInvCount(int *arr, int tam);
