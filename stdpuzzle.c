@@ -327,7 +327,7 @@ movimentosPossiveis possibleMoves(BYTE *selecBoard, size_t tam)
 }
 
 // Realiza o movimento, se for possível, atualizando o tabuleiro
-int doMove(int *board, size_t tam, usrSelecBoard *boardSel)
+void doMove(int *board, size_t tam, usrSelecBoard *boardSel)
 {
     COORD coord0 = get0position(board, tam);
     int aux;

@@ -239,11 +239,22 @@ int main()
 
     // Input do usuário
     char usrInput;
-    while ((usrInput = getch()) != '0')
+    while (true)
     {
-        readSelectPosition(usrInput, board1, &usrSelection, TAM);
         setCmdCursor(0, 0, hConsole);
         showBoard(board1, usrSelection.usrSelecBoard, TAM, hConsole);
+        usrInput = getch();
+        switch (usrInput)
+        {
+        case ' ':
+            doMove(board1, TAM, &usrSelection);
+            break;
+
+        default:
+            readSelectPosition(usrInput, board1, &usrSelection, TAM);
+            break;
+        }
+        // VERIFICAR SE A BOARD ESTA CERTA
         printf("\n%c\n", usrInput); // Mostrar o que o usuário está pressionando
     }
     free(board1);
