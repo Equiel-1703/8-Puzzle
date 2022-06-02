@@ -51,7 +51,7 @@ void FS2(HANDLE hConsole)
 {
     // FASE 2
 
-    const int OTAM = 4;
+    const int OTAM = 3;
 
     // Cria e embaralha a matriz do tabuleiro
     int *board2 = createBoard(OTAM);

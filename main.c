@@ -163,6 +163,8 @@ int main()
     // INTERAÇÃO 2
     INTERACAO2(hConsole);
 
+    system("cls");
+
     // FASE 2 - MEDIUM
     // Formata a saída para o tabuleiro
     setFontAndWindowSize(hConsole, 36, 22, 11, false);
@@ -174,7 +176,9 @@ int main()
 
     // FINAL FASE 2 - MEDIUM
 
-    // INTERAÇÃO
+    // INTERAÇÃO AEO
+
+    system("cls");
 
     // FASE FINAL - HARD
     // Formata a saída para o tabuleiro
@@ -185,6 +189,8 @@ int main()
 
     system("cls");
     // FINAL FASE FINAL - HARD
+
+    // INTERAÇÃO FINALs
 
     return 0;
 }
