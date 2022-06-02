@@ -161,8 +161,6 @@ int main()
     const int *gabarito = createBoard(TAM);
     embaralharBoard(board1, TAM, 1);
     usrSelecBoard usrSelection = createUsrSelectionBoard(TAM, board1);
-    // Exibe o tabuleiro na tela
-    showBoard(board1, usrSelection.usrSelecBoard, TAM, hConsole);
 
     printf("\n");
 
@@ -174,6 +172,8 @@ int main()
     {
         setCmdCursor(0, 0, hConsole);
         showBoard(board1, usrSelection.usrSelecBoard, TAM, hConsole);
+        // Mostra a quantidade de movimentos realizados
+        printf("\n%d\n", quantMov);
 
         usrInput = getch();
         switch (usrInput)
@@ -190,11 +190,10 @@ int main()
         // Verifica se o tabuleiro foi resolvido
         if (comparaArray(board1, gabarito, TAM))
             break;
-
-        // Mostra a quantidade de movimentos realizados
-        printf("\n%d\n", quantMov);
     }
     free(board1);
+    free(gabarito);
+    free(&usrSelection);
     system("cls");
 
     // INTERAÇÃO 2
