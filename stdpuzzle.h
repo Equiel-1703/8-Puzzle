@@ -34,7 +34,7 @@ void creditos(void);
 
 int *createBoard(size_t tamanho);
 usrSelecBoard createUsrSelectionBoard(size_t tamanho, int *board);
-void doMove(int *board, size_t tam, usrSelecBoard *boardSel);
+void doMove(int *board, size_t tam, usrSelecBoard *boardSel, int *quantMov);
 void readSelectPosition(char usrInput, int *board, usrSelecBoard *selecBoard, size_t tamanho);
 
 // Funções de embaralhamento

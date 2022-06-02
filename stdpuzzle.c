@@ -169,7 +169,7 @@ void readSelectPosition(char usrInput, int *board, usrSelecBoard *selecBoard, si
 }
 
 // Realiza o movimento, se for possível
-void doMove(int *board, size_t tam, usrSelecBoard *boardSel)
+void doMove(int *board, size_t tam, usrSelecBoard *boardSel, int *quantMov)
 {
     COORD coord0 = get0position(board, tam);
     int aux;
@@ -180,6 +180,7 @@ void doMove(int *board, size_t tam, usrSelecBoard *boardSel)
         aux = board[selY * tam + selX];
         board[selY * tam + selX] = board[coord0.Y * tam + coord0.X];
         board[coord0.Y * tam + coord0.X] = aux;
+        (*quantMov)++;
     }
 }
 
