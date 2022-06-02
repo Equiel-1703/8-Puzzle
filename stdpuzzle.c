@@ -184,6 +184,10 @@ void doMove(int *board, size_t tam, usrSelecBoard *boardSel, int *quantMov)
     }
 }
 
+// ======================================= FUNÇÕES DE RANKING =======================================
+
+// insira aqui DANIEL
+
 // ======================================= FUNÇÕES AUXILIARES =======================================
 
 // Retorna coordenada do 0 na matriz

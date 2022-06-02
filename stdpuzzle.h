@@ -37,6 +37,10 @@ usrSelecBoard createUsrSelectionBoard(size_t tamanho, int *board);
 void doMove(int *board, size_t tam, usrSelecBoard *boardSel, int *quantMov);
 void readSelectPosition(char usrInput, int *board, usrSelecBoard *selecBoard, size_t tamanho);
 
+// Funções de ranking
+
+// aq Dani
+
 // Funções de embaralhamento
 
 void embaralharBoard(int *board, size_t tamanho, int num);
