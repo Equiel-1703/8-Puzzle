@@ -10,14 +10,14 @@
 #include "stdpuzzle.h"
 
 // TEST STUFF
-#define TAM 3
+#define TAM 5
 
 int main()
 {
     // Configura a página de código de saída do console para UTF-8
     if (!SetConsoleOutputCP(65001))
     {
-        system("COLOR 04");
+        system("COLOR 05");
         printf("Erro na configuracao da pagina de saida!\n\n");
         system("PAUSE");
         exit(EXIT_FAILURE);
