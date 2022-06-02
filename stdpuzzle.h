@@ -39,7 +39,12 @@ void readSelectPosition(char usrInput, int *board, usrSelecBoard *selecBoard, si
 
 // Funções de ranking
 
-// aq Dani
+typedef struct pontuacao
+{
+    char nome[11];
+    int pontos;
+    int verificacao;
+} pontuacao;
 
 // Funções de embaralhamento
 

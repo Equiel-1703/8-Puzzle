@@ -150,13 +150,12 @@ int main()
     info.bVisible = true;
     SetConsoleCursorInfo(hConsole, &info);
 
-    char nome[11];
-    scanf("%10[^\n]", nome);
-    toUpper(nome);
-    printf("\n%s\n", nome);
+    pontuacao nome;
+    scanf("%10[^\n]", nome.nome);
+    toUpper(nome.nome);
+    printf("\n%s\n", nome.nome);
     getchar();
-    system("pause");
-    
+
     info.dwSize = 100;
     info.bVisible = false;
     SetConsoleCursorInfo(hConsole, &info);
@@ -168,7 +167,7 @@ int main()
     setCmdCursor(0, 0, hConsole);
 
     // INTERAÇÃO COM A RAINHA 1
-    // INTERACAO1(hConsole);
+    //INTERACAO1(hConsole);
 
     system("cls");
 
