@@ -47,9 +47,10 @@ void embaralharBoard(int *board, size_t tamanho, int num);
 int getInvCount(int *arr, int tam);
 bool isSolvable(int *puzzle, int tam);
 
-// Funções auxiliares do tabuleiro
+// Funções auxiliares
 
 COORD get0position(int *board, size_t tam);
+void toUpper(char *string);
 
 // Funções de gráficos
 

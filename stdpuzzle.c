@@ -1,4 +1,5 @@
 #include "stdpuzzle.h"
+#include <ctype.h>
 
 // ======================================= FUNÇÕES DO GAME =======================================
 
@@ -223,4 +224,14 @@ bool comparaArray(int *arr1, int *arr2, size_t tamanho)
         }
     }
     return isEqual;
+}
+
+void toUpper(char *string)
+{
+    int i = 0;
+    while (string[i])
+    {
+        string[i] = toupper(string[i]);
+        i++;
+    }
 }

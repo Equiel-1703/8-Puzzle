@@ -141,6 +141,24 @@ int main()
     // Limpa a tela
     system("cls");
 
+    // Pede o nome do usuário
+    setCmdCursor(0, 0, hConsole);
+    setFontAndWindowSize(hConsole, 28, 40, 10, false);
+    printf("DIGITE SEU NOME: ");
+
+    info.dwSize = 100;
+    info.bVisible = true;
+    SetConsoleCursorInfo(hConsole, &info);
+
+    char *nome = (char *)malloc(11 * sizeof(char));
+    scanf("%10[^\n]", nome);
+    toUpper(nome);
+    getchar();
+
+    info.dwSize = 100;
+    info.bVisible = false;
+    SetConsoleCursorInfo(hConsole, &info);
+
     // Formata a saída para os sprites
     setFontAndWindowSize(hConsole, 8, 201, 90, true);
 
