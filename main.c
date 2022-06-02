@@ -9,9 +9,6 @@
 // Bibliotecas personalizadas externas
 #include "stdpuzzle.h"
 
-// TEST STUFF
-#define TAM 3
-
 int main()
 {
     // Configura a página de código de saída do console para UTF-8
@@ -148,7 +145,7 @@ int main()
     setCmdCursor(0, 0, hConsole);
 
     // INTERAÇÃO COM A RAINHA 1
-    INTERACAO1(hConsole);
+    // INTERACAO1(hConsole);
 
     system("cls");
 
@@ -156,48 +153,38 @@ int main()
     // Formata a saída para o tabuleiro
     setFontAndWindowSize(hConsole, 36, 22, 11, false);
 
-    // Cria e embaralha a matriz do tabuleiro
-    int *board1 = createBoard(TAM);
-    int *gabarito = createBoard(TAM);
-    embaralharBoard(board1, TAM, 1);
-    usrSelecBoard usrSelection = createUsrSelectionBoard(TAM, board1);
+    // Chama a Fase 1
+    FS1(hConsole);
 
-    printf("\n");
-
-    // Input do usuário
-    char usrInput;
-    // Quantidade de movimentos do usuário
-    int quantMov = 0;
-    while (true)
-    {
-        setCmdCursor(0, 0, hConsole);
-        showBoard(board1, usrSelection.usrSelecBoard, TAM, hConsole);
-        // Mostra a quantidade de movimentos realizados
-        printf("\n%d\n", quantMov);
-
-        usrInput = getch();
-        switch (usrInput)
-        {
-        case ' ':
-            doMove(board1, TAM, &usrSelection, &quantMov);
-            break;
-
-        default:
-            readSelectPosition(usrInput, board1, &usrSelection, TAM);
-            break;
-        }
-
-        // Verifica se o tabuleiro foi resolvido
-        if (comparaArray(board1, gabarito, TAM))
-            break;
-    }
-    free(board1);
-    free(gabarito);
-    free(usrSelection.usrSelecBoard);
     system("cls");
+
+    // FINAL DA FASE 1 - EASY
 
     // INTERAÇÃO 2
     INTERACAO2(hConsole);
+
+    // FASE 2 - MEDIUM
+    // Formata a saída para o tabuleiro
+    setFontAndWindowSize(hConsole, 36, 22, 11, false);
+
+    // Chama a Fase 2
+    FS2(hConsole);
+
+    system("cls");
+
+    // FINAL FASE 2 - MEDIUM
+
+    // INTERAÇÃO
+
+    // FASE FINAL - HARD
+    // Formata a saída para o tabuleiro
+    setFontAndWindowSize(hConsole, 36, 22, 11, false);
+
+    // Chama a Fase Final
+    FSF(hConsole);
+
+    system("cls");
+    // FINAL FASE FINAL - HARD
 
     return 0;
 }

@@ -41,6 +41,12 @@ void readSelectPosition(char usrInput, int *board, usrSelecBoard *selecBoard, si
 
 // aq Dani
 
+// Funções dos Levels
+
+void FS1(HANDLE hConsole);
+void FS2(HANDLE hConsole);
+void FSF(HANDLE hConsole);
+
 // Funções de embaralhamento
 
 void embaralharBoard(int *board, size_t tamanho, int num);
