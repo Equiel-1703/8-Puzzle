@@ -145,7 +145,7 @@ int main()
     setCmdCursor(0, 0, hConsole);
 
     // INTERAÇÃO COM A RAINHA 1
-    // INTERACAO1(hConsole);
+    INTERACAO1(hConsole);
 
     system("cls");
 
