@@ -23,16 +23,6 @@ int main()
         exit(EXIT_FAILURE);
     }
 
-    //----------PLAYGROUND DO FERRÃO----------//
-    //                                        //
-    // while(board1 != gabarito){             //
-    //     showBoard(board1, TAM);            //
-    //     showComandos();                    //
-    //     getChar()!=(possibleMoves);        //
-    // }                                      //
-    //                                        //
-    //----------------------------------------//
-
     // Limpa a tela e coloca as cores
     SetConsoleTitle("8-Puzzle");
     system("cls");
@@ -148,14 +138,16 @@ int main()
 
     // ======================================= PLAY =======================================
 
+    // Limpa a tela
+    system("cls");
+
     // Formata a saída para os sprites
     setFontAndWindowSize(hConsole, 8, 201, 90, true);
 
     // Coloca o cursor em 0,0 e limpa a tela
     setCmdCursor(0, 0, hConsole);
-    system("cls");
 
-    // INTERAÇÃO 1
+    // INTERAÇÃO COM A RAINHA 1
     INTERACAO1(hConsole);
 
     system("cls");
@@ -176,6 +168,7 @@ int main()
 
     // Input do usuário
     char usrInput;
+    // Quantidade de movimentos do usuário
     int quantMov = 0;
     while (true)
     {
@@ -194,11 +187,12 @@ int main()
             break;
         }
 
-        // Verifica se o
+        // Verifica se o tabuleiro foi resolvido
         if (comparaArray(board1, gabarito, TAM))
             break;
 
-        printf("\n%d\n", quantMov); // Mostrar a quantidade de movimentos realizados
+        // Mostra a quantidade de movimentos realizados
+        printf("\n%d\n", quantMov);
     }
     free(board1);
     system("cls");
