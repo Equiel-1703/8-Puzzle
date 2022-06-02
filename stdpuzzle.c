@@ -207,7 +207,7 @@ COORD get0position(int *board, size_t tam)
 }
 
 // Compara dois arrays de mesmo tamanho
-bool comparaArray(int *arr1, const int *arr2, size_t tamanho)
+bool comparaArray(int *arr1, int *arr2, size_t tamanho)
 {
     bool isEqual = true;
     for (int i = 0; i < tamanho * tamanho; i++)

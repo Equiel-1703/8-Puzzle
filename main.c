@@ -158,7 +158,7 @@ int main()
 
     // Cria e embaralha a matriz do tabuleiro
     int *board1 = createBoard(TAM);
-    const int *gabarito = createBoard(TAM);
+    int *gabarito = createBoard(TAM);
     embaralharBoard(board1, TAM, 1);
     usrSelecBoard usrSelection = createUsrSelectionBoard(TAM, board1);
 
@@ -193,7 +193,7 @@ int main()
     }
     free(board1);
     free(gabarito);
-    free(&usrSelection);
+    free(usrSelection.usrSelecBoard);
     system("cls");
 
     // INTERAÇÃO 2

@@ -61,7 +61,7 @@ void printColored(HANDLE hConsole, int *board, int linha, int coluna, size_t tam
 void setCmdCursor(int x, int y, HANDLE hConsole);
 void eraser(int lines, int colums, char eraserChar);
 void timer(int tempo);
-bool comparaArray(int *arr1, const int *arr2, size_t tamanho);
+bool comparaArray(int *arr1, int *arr2, size_t tamanho);
 
 // Interações com a rainha
 
