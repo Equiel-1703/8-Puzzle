@@ -205,17 +205,19 @@ int main()
             readSelectPosition(usrInput, board1, &usrSelection, TAM);
             break;
         }
-
         // Verifica se o tabuleiro foi resolvido
         if (comparaArray(board1, gabarito, TAM))
             break;
     }
+    
     free(board1);
     free(gabarito);
     free(usrSelection.usrSelecBoard);
     system("cls");
 
     // INTERAÇÃO 2
+    printf("Sua pontuacao foi %d\n", quantMov);
+    usrInput = getch();
     INTERACAO2(hConsole);
 
     return 0;
