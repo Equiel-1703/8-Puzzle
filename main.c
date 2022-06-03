@@ -217,7 +217,7 @@ int main()
     system("cls");
 
     // INTERAÇÃO 2
-    printf("Sua pontuacao foi %d\n", score.pontos[0]);
+    printf("Sua pontuação foi %d.\n", score.pontos[0]);
     usrInput = getch();
     INTERACAO2(hConsole);
 
