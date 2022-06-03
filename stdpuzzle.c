@@ -187,7 +187,7 @@ void doMove(int *board, size_t tam, usrSelecBoard *boardSel, int *quantMov)
 // Função de comemoração
 void congratulations(void)
 {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 5; i++)
     {
         system("COLOR 07");
         timer(100);
