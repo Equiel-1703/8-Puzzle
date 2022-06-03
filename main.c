@@ -150,10 +150,10 @@ int main()
     info.bVisible = true;
     SetConsoleCursorInfo(hConsole, &info);
 
-    pontuacao nome;
-    scanf("%10[^\n]", nome.nome);
-    toUpper(nome.nome);
-    printf("\n%s\n", nome.nome);
+    pontuacao score;
+    scanf("%10[^\n]", score.nome);
+    toUpper(score.nome);
+    printf("\n%s\n", score.nome);
     getchar();
 
     info.dwSize = 100;
@@ -186,19 +186,20 @@ int main()
     // Input do usuário
     char usrInput;
     // Quantidade de movimentos do usuário
-    int quantMov = 0;
+    score.pontos [0] = 0;
+
     while (true)
     {
         setCmdCursor(0, 0, hConsole);
         showBoard(board1, usrSelection.usrSelecBoard, TAM, hConsole);
         // Mostra a quantidade de movimentos realizados
-        printf("\n%d\n", quantMov);
+        printf("\n%d\n", score.pontos[0]);
 
         usrInput = getch();
         switch (usrInput)
         {
         case ' ':
-            doMove(board1, TAM, &usrSelection, &quantMov);
+            doMove(board1, TAM, &usrSelection, &score.pontos[0]);
             break;
 
         default:
@@ -216,7 +217,7 @@ int main()
     system("cls");
 
     // INTERAÇÃO 2
-    printf("Sua pontuacao foi %d\n", quantMov);
+    printf("Sua pontuacao foi %d\n", score.pontos[0]);
     usrInput = getch();
     INTERACAO2(hConsole);
 

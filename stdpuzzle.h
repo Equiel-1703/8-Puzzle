@@ -42,7 +42,7 @@ void readSelectPosition(char usrInput, int *board, usrSelecBoard *selecBoard, si
 typedef struct pontuacao
 {
     char nome[11];
-    int pontos;
+    int pontos[3];
     int verificacao;
 } pontuacao;
 
