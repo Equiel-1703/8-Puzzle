@@ -184,6 +184,18 @@ void doMove(int *board, size_t tam, usrSelecBoard *boardSel, int *quantMov)
     }
 }
 
+// Função de comemoração
+void congratulations(void)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        system("COLOR 07");
+        timer(100);
+        system("COLOR 70");
+        timer(100);
+    }
+}
+
 // ======================================= FUNÇÕES DE RANKING =======================================
 
 // insira aqui DANIEL
@@ -223,4 +235,19 @@ bool comparaArray(int *arr1, int *arr2, size_t tamanho)
         }
     }
     return isEqual;
+}
+
+// Função que limpa o buffer do teclado
+void clearKeyboardBuffer(void)
+{
+    fseek(stdin, 0, SEEK_END);
+    if (ftell(stdin) > 0)
+    {
+        rewind(stdin);
+        char c;
+        while ((c = getchar()) != EOF)
+        {
+            continue;
+        }
+    }
 }

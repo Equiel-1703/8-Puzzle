@@ -36,6 +36,7 @@ int *createBoard(size_t tamanho);
 usrSelecBoard createUsrSelectionBoard(size_t tamanho, int *board);
 void doMove(int *board, size_t tam, usrSelecBoard *boardSel, int *quantMov);
 void readSelectPosition(char usrInput, int *board, usrSelecBoard *selecBoard, size_t tamanho);
+void congratulations(void);
 
 // Funções de ranking
 
@@ -50,6 +51,7 @@ bool isSolvable(int *puzzle, int tam);
 // Funções auxiliares do tabuleiro
 
 COORD get0position(int *board, size_t tam);
+void clearKeyboardBuffer(void);
 
 // Funções de gráficos
 
@@ -64,13 +66,13 @@ void setFontAndWindowSize(HANDLE hConsole, int fontSize, int BufferX, int Buffer
 void printColored(HANDLE hConsole, int *board, int linha, int coluna, size_t tamanho, WORD atributo);
 void setCmdCursor(int x, int y, HANDLE hConsole);
 void eraser(int lines, int colums, char eraserChar);
-void timer(int tempo);
+void timer(int tempoMS);
 bool comparaArray(int *arr1, int *arr2, size_t tamanho);
 
 // Interações com a rainha
 
-void INTERACAO1(HANDLE hConsole);
-void INTERACAO2(HANDLE hConsole);
+void INTERACAO1(HANDLE hConsoleOut, HANDLE hConsoleIn);
+void INTERACAO2(HANDLE hConsoleOut, HANDLE hConsoleIn);
 
 // Funções da API do Windows
 

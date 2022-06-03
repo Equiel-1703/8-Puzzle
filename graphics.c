@@ -411,7 +411,7 @@ void eraser(int lines, int colums, char eraserChar)
 }
 
 // Essa função cria um delay de "tempo" milissegundos
-void timer(int tempo)
+void timer(int tempoMS)
 {
     // A variável "start" salva o número de clocks até o momento de execução
     clock_t start = clock();
@@ -442,5 +442,5 @@ void timer(int tempo)
         o código no "do" continuará a ser executado repetidamente. Quando a diferença
         for igual ou superior que o tempo solicitado, o laço quebra e a função acaba
         */
-    } while (msec < tempo);
+    } while (msec < tempoMS);
 }
