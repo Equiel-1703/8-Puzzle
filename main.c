@@ -187,7 +187,6 @@ int main()
     char usrInput;
     // Quantidade de movimentos do usuário
     score.pontos [0] = 0;
-
     while (true)
     {
         setCmdCursor(0, 0, hConsole);
@@ -220,6 +219,5 @@ int main()
     printf("Sua pontuação foi %d.\n", score.pontos[0]);
     usrInput = getch();
     INTERACAO2(hConsole);
-
     return 0;
 }
