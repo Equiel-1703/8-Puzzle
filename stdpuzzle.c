@@ -1,5 +1,6 @@
 #include "stdpuzzle.h"
 #include <ctype.h>
+#include <limits.h>
 
 // ======================================= FUNÇÕES DO GAME =======================================
 
@@ -197,11 +198,58 @@ void createScoreElement(pontuacao *score)
 
     scanf("%10[^\n]", novo->nome);
     toUpper(novo->nome);
-    printf("\n%s\n", novo->nome);
     getchar();
+
+    novo->pontos = 0; // Inicializa os pontos com 0
+    novo->proximo = score->proximo;
+    score->proximo = novo;
+}
+
+void createNewElement(pontuacao *score)
+{
+    pontuacao *novo;
+
+    novo = (pontuacao *)malloc(sizeof(pontuacao));
 
     novo->proximo = score->proximo;
     score->proximo = novo;
+}
+
+void deleteFirstElement(pontuacao *score)
+{
+    pontuacao *temp = score->proximo;
+    score->proximo = score->proximo->proximo;
+    free(temp);
+}
+
+pontuacao *findSmallestScore(pontuacao *lista)
+{
+    int smallest = INT_MAX;
+    pontuacao *smallestPtr;
+
+    for (pontuacao *i = lista->proximo; i != NULL; i = i->proximo)
+    {
+        if (i->pontos < smallest)
+        {
+            smallest = i->pontos;
+            smallestPtr = i;
+        }
+    }
+
+    return smallestPtr;
+}
+
+void deleteThisElement(pontuacao *element, pontuacao *lista)
+{
+    pontuacao *i, *j;
+
+    for (i = lista, j = lista->proximo; j != element; i = j, j = j->proximo)
+    {
+        continue;
+    }
+
+    i->proximo = j->proximo;
+    free(j);
 }
 
 // ======================================= FUNÇÕES AUXILIARES =======================================

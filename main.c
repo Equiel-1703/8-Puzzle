@@ -148,10 +148,11 @@ int main()
     SetConsoleCursorInfo(hConsole, &info);
 
     // Cria a lista encadeada
-    pontuacao score;
-    score.proximo = NULL;
+    pontuacao *score;
+    score = (pontuacao *)malloc(sizeof(pontuacao));
+    score->proximo = NULL;
     // Salva o nome do usuario num novo elemento da lista
-    createScoreElement(&score);
+    createScoreElement(score);
 
     // Esconde o cursor
     info.dwSize = 100;
@@ -169,12 +170,12 @@ int main()
 
     system("cls");
 
-    // FASE 1
+    // INICIO DA FASE 1 - EASY
     // Formata a saída para o tabuleiro
     setFontAndWindowSize(hConsole, 36, 22, 11, false);
 
     // Chama a Fase 1
-    FS1(hConsole);
+    FS1(hConsole, &score->proximo->pontos);
 
     system("cls");
     // FINAL DA FASE 1 - EASY
@@ -184,12 +185,12 @@ int main()
 
     system("cls");
 
-    // FASE 2 - MEDIUM
+    // INICIO DA FASE 2 - MEDIUM
     // Formata a saída para o tabuleiro
     setFontAndWindowSize(hConsole, 36, 22, 11, false);
 
     // Chama a Fase 2
-    FS2(hConsole);
+    FS2(hConsole, &score->proximo->pontos);
 
     system("cls");
     // FINAL FASE 2 - MEDIUM
@@ -198,17 +199,70 @@ int main()
 
     system("cls");
 
-    // FASE FINAL - HARD
+    // INICIO DA FASE FINAL - HARD
     // Formata a saída para o tabuleiro
     setFontAndWindowSize(hConsole, 36, 22, 11, false);
 
     // Chama a Fase Final
-    FSF(hConsole);
+    FSF(hConsole, &score->proximo->pontos);
 
     system("cls");
     // FINAL FASE FINAL - HARD
 
+    // Salva o score do player
+    FILE *saveFile;
+
+    // Tenta ler a pontuação
+    saveFile = fopen("save/score.bin", "r+b");
+
+    if (saveFile == NULL) // A BOSTA DO ARQUIVO N EXISTE
+    {
+        saveFile = fopen("save/score.bin", "wb");
+        fseek(saveFile, 0, SEEK_END);
+
+        fwrite(score->proximo->nome, sizeof(char), 11, saveFile);
+        fwrite(&score->proximo->pontos, sizeof(int), 1, saveFile);
+
+        fclose(saveFile);
+        printf("feito cpxs");
+    }
+    else // A BOSTA DO AQUIVO EXISTE
+    {
+        fseek(saveFile, 0, SEEK_SET);
+
+        while (true)
+        {
+            // AGORA ESSA PORRA DE CORNO TEM UM NOVO ELEMENTO CARALHO
+            createNewElement(score);
+
+            if (fread(score->proximo->nome, sizeof(char), 11, saveFile) != 11 || fread(&score->proximo->pontos, sizeof(int), 1, saveFile) != 1)
+            {
+                deleteFirstElement(score);
+                break;
+            }
+        }
+
+        pontuacao *smallestElement;
+        fseek(saveFile, 0, SEEK_SET);
+
+        while (true)
+        {
+            if (score->proximo == NULL)
+                break;
+
+            smallestElement = findSmallestScore(score);
+
+            fwrite(smallestElement->nome, sizeof(char), 11, saveFile);
+            fwrite(&smallestElement->pontos, sizeof(int), 1, saveFile);
+
+            deleteThisElement(smallestElement, score);
+        }
+        fclose(saveFile);
+    }
+    printf("\nFeito\n");
+    getch();
+
     // INTERAÇÃO FINAL
-  
+
     return 0;
 }

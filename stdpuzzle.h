@@ -42,17 +42,21 @@ void readSelectPosition(char usrInput, int *board, usrSelecBoard *selecBoard, si
 typedef struct pontuacao
 {
     char nome[11];
-    int pontos[3];
+    int pontos;
     struct pontuacao *proximo;
 } pontuacao;
 
 void createScoreElement(pontuacao *score);
+void createNewElement(pontuacao *score);
+void deleteFirstElement(pontuacao *score);
+pontuacao *findSmallestScore(pontuacao *lista);
+void deleteThisElement(pontuacao *element, pontuacao *lista);
 
 // Funções dos Levels
 
-void FS1(HANDLE hConsole);
-void FS2(HANDLE hConsole);
-void FSF(HANDLE hConsole);
+void FS1(HANDLE hConsole, int *movimentos);
+void FS2(HANDLE hConsole, int *movimentos);
+void FSF(HANDLE hConsole, int *movimentos);
 
 // Funções de embaralhamento
 
