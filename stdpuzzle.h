@@ -40,7 +40,24 @@ void congratulations(void);
 
 // Funções de ranking
 
-// aq Dani
+typedef struct pontuacao
+{
+    char nome[11];
+    int pontos;
+    struct pontuacao *proximo;
+} pontuacao;
+
+void createScoreElement(pontuacao *score);
+void createNewElement(pontuacao *score);
+void deleteFirstElement(pontuacao *score);
+pontuacao *findSmallestScore(pontuacao *lista);
+void deleteThisElement(pontuacao *element, pontuacao *lista);
+
+// Funções dos Levels
+
+void FS1(HANDLE hConsole, int *movimentos);
+void FS2(HANDLE hConsole, int *movimentos);
+void FSF(HANDLE hConsole, int *movimentos);
 
 // Funções de embaralhamento
 
@@ -48,9 +65,10 @@ void embaralharBoard(int *board, size_t tamanho, int num);
 int getInvCount(int *arr, int tam);
 bool isSolvable(int *puzzle, int tam);
 
-// Funções auxiliares do tabuleiro
+// Funções auxiliares
 
 COORD get0position(int *board, size_t tam);
+void toUpper(char *string);
 void clearKeyboardBuffer(void);
 
 // Funções de gráficos

@@ -1,4 +1,6 @@
 #include "stdpuzzle.h"
+#include <ctype.h>
+#include <limits.h>
 
 // ======================================= FUNÇÕES DO GAME =======================================
 
@@ -198,7 +200,69 @@ void congratulations(void)
 
 // ======================================= FUNÇÕES DE RANKING =======================================
 
-// insira aqui DANIEL
+void createScoreElement(pontuacao *score)
+{
+    pontuacao *novo;
+
+    novo = (pontuacao *)malloc(sizeof(pontuacao));
+
+    printf("DIGITE SEU NOME: ");
+
+    scanf("%10[^\n]", novo->nome);
+    toUpper(novo->nome);
+    getchar();
+
+    novo->pontos = 0; // Inicializa os pontos com 0
+    novo->proximo = score->proximo;
+    score->proximo = novo;
+}
+
+void createNewElement(pontuacao *score)
+{
+    pontuacao *novo;
+
+    novo = (pontuacao *)malloc(sizeof(pontuacao));
+
+    novo->proximo = score->proximo;
+    score->proximo = novo;
+}
+
+void deleteFirstElement(pontuacao *score)
+{
+    pontuacao *temp = score->proximo;
+    score->proximo = score->proximo->proximo;
+    free(temp);
+}
+
+pontuacao *findSmallestScore(pontuacao *lista)
+{
+    int smallest = INT_MAX;
+    pontuacao *smallestPtr;
+
+    for (pontuacao *i = lista->proximo; i != NULL; i = i->proximo)
+    {
+        if (i->pontos < smallest)
+        {
+            smallest = i->pontos;
+            smallestPtr = i;
+        }
+    }
+
+    return smallestPtr;
+}
+
+void deleteThisElement(pontuacao *element, pontuacao *lista)
+{
+    pontuacao *i, *j;
+
+    for (i = lista, j = lista->proximo; j != element; i = j, j = j->proximo)
+    {
+        continue;
+    }
+
+    i->proximo = j->proximo;
+    free(j);
+}
 
 // ======================================= FUNÇÕES AUXILIARES =======================================
 
@@ -237,6 +301,17 @@ bool comparaArray(int *arr1, int *arr2, size_t tamanho)
     return isEqual;
 }
 
+
+void toUpper(char *string)
+{
+    int i = 0;
+    while (string[i])
+    {
+        string[i] = toupper(string[i]);
+        i++;
+    }
+}
+
 // Função que limpa o buffer do teclado
 void clearKeyboardBuffer(void)
 {
@@ -249,5 +324,6 @@ void clearKeyboardBuffer(void)
         {
             continue;
         }
+
     }
 }

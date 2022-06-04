@@ -9,9 +9,6 @@
 // Bibliotecas personalizadas externas
 #include "stdpuzzle.h"
 
-// TEST STUFF
-#define TAM 3
-
 int main()
 {
     // Configura a página de código de saída do console para UTF-8
@@ -142,6 +139,27 @@ int main()
     // Limpa a tela
     system("cls");
 
+    // Redimensiona o console para pedir o nome do usuario
+    setCmdCursor(0, 0, hConsole);
+    setFontAndWindowSize(hConsole, 28, 40, 10, false);
+
+    // Deixa o cursor visivel
+    info.dwSize = 100;
+    info.bVisible = true;
+    SetConsoleCursorInfo(hConsole, &info);
+
+    // Cria a lista encadeada
+    pontuacao *score;
+    score = (pontuacao *)malloc(sizeof(pontuacao));
+    score->proximo = NULL;
+    // Salva o nome do usuario num novo elemento da lista
+    createScoreElement(score);
+
+    // Esconde o cursor
+    info.dwSize = 100;
+    info.bVisible = false;
+    SetConsoleCursorInfo(hConsole, &info);
+
     // Formata a saída para os sprites
     setFontAndWindowSize(hConsoleOut, 8, 201, 90, true);
 
@@ -153,52 +171,102 @@ int main()
 
     system("cls");
 
-    // FASE 1
+    // INICIO DA FASE 1 - EASY
+    // Formata a saída para o tabuleiro
+    setFontAndWindowSize(hConsole, 36, 22, 11, false);
+
+    // Chama a Fase 1
+    FS1(hConsole, &score->proximo->pontos);
+
+    system("cls");
+    // FINAL DA FASE 1 - EASY
+
+    // INTERAÇÃO 2
+    INTERACAO2(hConsole);
+
+    system("cls");
+
+    // INICIO DA FASE 2 - MEDIUM
     // Formata a saída para o tabuleiro
     setFontAndWindowSize(hConsoleOut, 36, 22, 11, false);
 
-    // Cria e embaralha a matriz do tabuleiro
-    int *board1 = createBoard(TAM);
-    int *gabarito = createBoard(TAM);
-    embaralharBoard(board1, TAM, 1);
-    usrSelecBoard usrSelection = createUsrSelectionBoard(TAM, board1);
+    // Chama a Fase 2
+    FS2(hConsole, &score->proximo->pontos);
 
-    printf("\n");
+    system("cls");
+    // FINAL FASE 2 - MEDIUM
 
-    // Input do usuário
-    char usrInput;
-    // Quantidade de movimentos do usuário
-    int quantMov = 0;
-    while (true)
-    {
-        setCmdCursor(0, 0, hConsoleOut);
-        showBoard(board1, usrSelection.usrSelecBoard, TAM, hConsoleOut);
-        // Mostra a quantidade de movimentos realizados
-        printf("\n%d\n", quantMov);
+    // INTERAÇÃO AEO
 
-        usrInput = getch();
-        switch (usrInput)
-        {
-        case ' ':
-            doMove(board1, TAM, &usrSelection, &quantMov);
-            break;
-
-        default:
-            readSelectPosition(usrInput, board1, &usrSelection, TAM);
-            break;
-        }
-
-        // Verifica se o tabuleiro foi resolvido
-        if (comparaArray(board1, gabarito, TAM))
-            break;
-    }
-    free(board1);
-    free(gabarito);
-    free(usrSelection.usrSelecBoard);
     system("cls");
 
-    // INTERAÇÃO 2
-    INTERACAO2(hConsoleOut, hConsoleIn);
+    // INICIO DA FASE FINAL - HARD
+    // Formata a saída para o tabuleiro
+    setFontAndWindowSize(hConsole, 36, 22, 11, false);
+
+    // Chama a Fase Final
+    FSF(hConsole, &score->proximo->pontos);
+
+    system("cls");
+    // FINAL FASE FINAL - HARD
+
+    // Salva o score do player
+    FILE *saveFile;
+
+    // Verifica se o arquivo existe, caso ainda não exista, cria-se o score.bin na pasta "save"
+    saveFile = fopen("save/score.bin", "r+b");
+
+    if (saveFile == NULL)
+    {
+
+        saveFile = fopen("save/score.bin", "wb");
+        fseek(saveFile, 0, SEEK_END);
+
+        // Ordena a lista de pontuações em ordem crescente
+        fwrite(score->proximo->nome, sizeof(char), 11, saveFile);
+        fwrite(&score->proximo->pontos, sizeof(int), 1, saveFile);
+
+        fclose(saveFile);
+        printf("feito cpxs");
+    }
+    else
+    {
+        fseek(saveFile, 0, SEEK_SET);
+
+        while (true)
+        {
+            // Cria um novo elemento (pontuação)
+            createNewElement(score);
+            // Caso o score do novo elemento seja maior que o score do primeiro elemento, o novo elemento é colocado
+            if (fread(score->proximo->nome, sizeof(char), 11, saveFile) != 11 || fread(&score->proximo->pontos, sizeof(int), 1, saveFile) != 1)
+            {
+                deleteFirstElement(score);
+                break;
+            }
+        }
+
+        pontuacao *smallestElement;
+        fseek(saveFile, 0, SEEK_SET);
+
+        // Encontra o menor elemento da lista
+        while (true)
+        {
+            if (score->proximo == NULL)
+                break;
+
+            smallestElement = findSmallestScore(score);
+            // Organiza os dados do arquivo em binário
+            fwrite(smallestElement->nome, sizeof(char), 11, saveFile);
+            fwrite(&smallestElement->pontos, sizeof(int), 1, saveFile);
+
+            deleteThisElement(smallestElement, score);
+        }
+        fclose(saveFile);
+    }
+    printf("\nFeito\n");
+    getch();
+
+    // INTERAÇÃO FINAL
 
     return 0;
 }
