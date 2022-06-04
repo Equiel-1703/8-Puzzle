@@ -5,13 +5,13 @@ void FS1(HANDLE hConsole)
 {
     // FASE 1
 
-    const int OTAM = 3;
+    const int SIZE = 3;
 
     // Cria e embaralha a matriz do tabuleiro
-    int *board1 = createBoard(OTAM);
-    int *gabarito = createBoard(OTAM);
-    embaralharBoard(board1, OTAM, 1);
-    usrSelecBoard usrSelection = createUsrSelectionBoard(OTAM, board1);
+    int *board1 = createBoard(SIZE);
+    int *gabarito = createBoard(SIZE);
+    embaralharBoard(board1, SIZE, 1);
+    usrSelecBoard usrSelection = createUsrSelectionBoard(SIZE, board1);
 
     printf("\n");
 
@@ -22,7 +22,7 @@ void FS1(HANDLE hConsole)
     while (true)
     {
         setCmdCursor(0, 0, hConsole);
-        showBoard(board1, usrSelection.usrSelecBoard, OTAM, hConsole);
+        showBoard(board1, usrSelection.usrSelecBoard, SIZE, hConsole);
         // Mostra a quantidade de movimentos realizados
         printf("\n%d\n", quantMov);
 
@@ -30,16 +30,16 @@ void FS1(HANDLE hConsole)
         switch (usrInput)
         {
         case ' ':
-            doMove(board1, OTAM, &usrSelection, &quantMov);
+            doMove(board1, SIZE, &usrSelection, &quantMov);
             break;
 
         default:
-            readSelectPosition(usrInput, board1, &usrSelection, OTAM);
+            readSelectPosition(usrInput, board1, &usrSelection, SIZE);
             break;
         }
 
         // Verifica se o tabuleiro foi resolvido
-        if (comparaArray(board1, gabarito, OTAM))
+        if (comparaArray(board1, gabarito, SIZE))
             break;
     }
     free(board1);
@@ -51,13 +51,13 @@ void FS2(HANDLE hConsole)
 {
     // FASE 2
 
-    const int OTAM = 3;
+    const int SIZE = 3;
 
     // Cria e embaralha a matriz do tabuleiro
-    int *board2 = createBoard(OTAM);
-    int *gabarito = createBoard(OTAM);
-    embaralharBoard(board2, OTAM, 1);
-    usrSelecBoard usrSelection = createUsrSelectionBoard(OTAM, board2);
+    int *board2 = createBoard(SIZE);
+    int *gabarito = createBoard(SIZE);
+    embaralharBoard(board2, SIZE, 1);
+    usrSelecBoard usrSelection = createUsrSelectionBoard(SIZE, board2);
 
     printf("\n");
 
@@ -68,7 +68,7 @@ void FS2(HANDLE hConsole)
     while (true)
     {
         setCmdCursor(0, 0, hConsole);
-        showBoard(board2, usrSelection.usrSelecBoard, OTAM, hConsole);
+        showBoard(board2, usrSelection.usrSelecBoard, SIZE, hConsole);
         // Mostra a quantidade de movimentos realizados
         printf("\n%d\n", quantMov);
 
@@ -76,16 +76,16 @@ void FS2(HANDLE hConsole)
         switch (usrInput)
         {
         case ' ':
-            doMove(board2, OTAM, &usrSelection, &quantMov);
+            doMove(board2, SIZE, &usrSelection, &quantMov);
             break;
 
         default:
-            readSelectPosition(usrInput, board2, &usrSelection, OTAM);
+            readSelectPosition(usrInput, board2, &usrSelection, SIZE);
             break;
         }
 
         // Verifica se o tabuleiro foi resolvido
-        if (comparaArray(board2, gabarito, OTAM))
+        if (comparaArray(board2, gabarito, SIZE))
             break;
     }
     free(board2);
@@ -97,13 +97,13 @@ void FSF(HANDLE hConsole)
 {
     // FASE 3
 
-    const int OTAM = 4;
+    const int SIZE = 4;
 
     // Cria e embaralha a matriz do tabuleiro
-    int *board3 = createBoard(OTAM);
-    int *gabarito = createBoard(OTAM);
-    embaralharBoard(board3, OTAM, 1);
-    usrSelecBoard usrSelection = createUsrSelectionBoard(OTAM, board3);
+    int *board3 = createBoard(SIZE);
+    int *gabarito = createBoard(SIZE);
+    embaralharBoard(board3, SIZE, 1);
+    usrSelecBoard usrSelection = createUsrSelectionBoard(SIZE, board3);
 
     printf("\n");
 
@@ -114,7 +114,7 @@ void FSF(HANDLE hConsole)
     while (true)
     {
         setCmdCursor(0, 0, hConsole);
-        showBoard(board3, usrSelection.usrSelecBoard, OTAM, hConsole);
+        showBoard(board3, usrSelection.usrSelecBoard, SIZE, hConsole);
         // Mostra a quantidade de movimentos realizados
         printf("\n%d\n", quantMov);
 
@@ -122,16 +122,16 @@ void FSF(HANDLE hConsole)
         switch (usrInput)
         {
         case ' ':
-            doMove(board3, OTAM, &usrSelection, &quantMov);
+            doMove(board3, SIZE, &usrSelection, &quantMov);
             break;
 
         default:
-            readSelectPosition(usrInput, board3, &usrSelection, OTAM);
+            readSelectPosition(usrInput, board3, &usrSelection, SIZE);
             break;
         }
 
         // Verifica se o tabuleiro foi resolvido
-        if (comparaArray(board3, gabarito, OTAM))
+        if (comparaArray(board3, gabarito, SIZE))
             break;
     }
     free(board3);

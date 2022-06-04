@@ -157,7 +157,6 @@ int main()
     FS1(hConsole);
 
     system("cls");
-
     // FINAL DA FASE 1 - EASY
 
     // INTERAÇÃO 2
@@ -173,7 +172,6 @@ int main()
     FS2(hConsole);
 
     system("cls");
-
     // FINAL FASE 2 - MEDIUM
 
     // INTERAÇÃO AEO
@@ -190,7 +188,7 @@ int main()
     system("cls");
     // FINAL FASE FINAL - HARD
 
-    // INTERAÇÃO FINALs
+    // INTERAÇÃO FINAL
 
     return 0;
 }
