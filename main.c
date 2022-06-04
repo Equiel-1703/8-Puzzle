@@ -141,21 +141,22 @@ int main()
     // Limpa a tela
     system("cls");
 
-    // Pede o nome do usuário
+    // Redimensiona o console para pedir o nome do usuario
     setCmdCursor(0, 0, hConsole);
     setFontAndWindowSize(hConsole, 28, 40, 10, false);
-    printf("DIGITE SEU NOME: ");
 
+    // Deixa o cursor visivel
     info.dwSize = 100;
     info.bVisible = true;
     SetConsoleCursorInfo(hConsole, &info);
 
+    // Cria a lista encadeada
     pontuacao score;
-    scanf("%10[^\n]", score.nome);
-    toUpper(score.nome);
-    printf("\n%s\n", score.nome);
-    getchar();
+    score.proximo = NULL;
+    // Salva o nome do usuario num novo elemento da lista
+    createScoreElement(&score);
 
+    // Esconde o cursor
     info.dwSize = 100;
     info.bVisible = false;
     SetConsoleCursorInfo(hConsole, &info);
@@ -167,7 +168,7 @@ int main()
     setCmdCursor(0, 0, hConsole);
 
     // INTERAÇÃO COM A RAINHA 1
-    //INTERACAO1(hConsole);
+    // INTERACAO1(hConsole);
 
     system("cls");
 
@@ -185,20 +186,28 @@ int main()
 
     // Input do usuário
     char usrInput;
-    // Quantidade de movimentos do usuário
-    score.pontos [0] = 0;
-    while (true)
+    // Quantidade de movimentos do player (ele é sempre o primeiro elemento da lista)
+    score.proximo->pontos[0] = 0;
+    score.proximo->pontos[1] = 500;
+    score.proximo->pontos[2] = 5500;
+
+    bool temp = true;
+    while (temp)
     {
         setCmdCursor(0, 0, hConsole);
         showBoard(board1, usrSelection.usrSelecBoard, TAM, hConsole);
         // Mostra a quantidade de movimentos realizados
-        printf("\n%d\n", score.pontos[0]);
+        printf("\n%d\n", score.proximo->pontos[0]);
 
         usrInput = getch();
         switch (usrInput)
         {
         case ' ':
-            doMove(board1, TAM, &usrSelection, &score.pontos[0]);
+            doMove(board1, TAM, &usrSelection, &score.proximo->pontos[0]);
+            break;
+
+        case 'k':
+            temp = false;
             break;
 
         default:
@@ -209,14 +218,14 @@ int main()
         if (comparaArray(board1, gabarito, TAM))
             break;
     }
-    
+
     free(board1);
     free(gabarito);
     free(usrSelection.usrSelecBoard);
     system("cls");
 
     // INTERAÇÃO 2
-    printf("Sua pontuação foi %d.\n", score.pontos[0]);
+    printf("Sua pontuação foi %d.\n", score.proximo->pontos[0]);
     usrInput = getch();
     INTERACAO2(hConsole);
     return 0;

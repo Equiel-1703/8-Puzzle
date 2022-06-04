@@ -43,8 +43,10 @@ typedef struct pontuacao
 {
     char nome[11];
     int pontos[3];
-    int verificacao;
+    struct pontuacao *proximo;
 } pontuacao;
+
+void createScoreElement(pontuacao *score);
 
 // Funções de embaralhamento
 
