@@ -138,6 +138,26 @@ int main()
     // Limpa a tela
     system("cls");
 
+    // Redimensiona o console para pedir o nome do usuario
+    setCmdCursor(0, 0, hConsole);
+    setFontAndWindowSize(hConsole, 28, 40, 10, false);
+
+    // Deixa o cursor visivel
+    info.dwSize = 100;
+    info.bVisible = true;
+    SetConsoleCursorInfo(hConsole, &info);
+
+    // Cria a lista encadeada
+    pontuacao score;
+    score.proximo = NULL;
+    // Salva o nome do usuario num novo elemento da lista
+    createScoreElement(&score);
+
+    // Esconde o cursor
+    info.dwSize = 100;
+    info.bVisible = false;
+    SetConsoleCursorInfo(hConsole, &info);
+
     // Formata a saída para os sprites
     setFontAndWindowSize(hConsole, 8, 201, 90, true);
 
@@ -145,7 +165,7 @@ int main()
     setCmdCursor(0, 0, hConsole);
 
     // INTERAÇÃO COM A RAINHA 1
-    INTERACAO1(hConsole);
+    // INTERACAO1(hConsole);
 
     system("cls");
 
@@ -189,6 +209,6 @@ int main()
     // FINAL FASE FINAL - HARD
 
     // INTERAÇÃO FINAL
-
+  
     return 0;
 }

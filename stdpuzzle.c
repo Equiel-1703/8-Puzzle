@@ -1,4 +1,5 @@
 #include "stdpuzzle.h"
+#include <ctype.h>
 
 // ======================================= FUNÇÕES DO GAME =======================================
 
@@ -186,7 +187,22 @@ void doMove(int *board, size_t tam, usrSelecBoard *boardSel, int *quantMov)
 
 // ======================================= FUNÇÕES DE RANKING =======================================
 
-// insira aqui DANIEL
+void createScoreElement(pontuacao *score)
+{
+    pontuacao *novo;
+
+    novo = (pontuacao *)malloc(sizeof(pontuacao));
+
+    printf("DIGITE SEU NOME: ");
+
+    scanf("%10[^\n]", novo->nome);
+    toUpper(novo->nome);
+    printf("\n%s\n", novo->nome);
+    getchar();
+
+    novo->proximo = score->proximo;
+    score->proximo = novo;
+}
 
 // ======================================= FUNÇÕES AUXILIARES =======================================
 
@@ -223,4 +239,14 @@ bool comparaArray(int *arr1, int *arr2, size_t tamanho)
         }
     }
     return isEqual;
+}
+
+void toUpper(char *string)
+{
+    int i = 0;
+    while (string[i])
+    {
+        string[i] = toupper(string[i]);
+        i++;
+    }
 }
