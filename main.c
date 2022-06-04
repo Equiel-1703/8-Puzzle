@@ -25,8 +25,9 @@ int main()
     system("cls");
     system("COLOR 70");
 
-    // Salva o handle do console
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    // Salva o handle de saída e entrada do console
+    HANDLE hConsoleOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    HANDLE hConsoleIn = GetStdHandle(STD_INPUT_HANDLE);
     // Salva o handle da JANELA do console
     HWND wConsole = GetConsoleWindow();
 
@@ -80,16 +81,16 @@ int main()
     */
 
     // Configura a formatação do jogo quando ele é aberto pela primeira vez
-    setMainOutputSettings(hConsole);
+    setMainOutputSettings(hConsoleOut);
 
     // Coloca o cursor em 0,0
-    setCmdCursor(0, 0, hConsole);
+    setCmdCursor(0, 0, hConsoleOut);
 
     // Esconde o cursor
     CONSOLE_CURSOR_INFO info;
     info.dwSize = 100;
     info.bVisible = false;
-    SetConsoleCursorInfo(hConsole, &info);
+    SetConsoleCursorInfo(hConsoleOut, &info);
 
     // Menu principal
     char choice;
@@ -110,17 +111,17 @@ int main()
             system("cls");
 
             // Formata a saída para os sprites
-            setFontAndWindowSize(hConsole, 8, 201, 90, true);
+            setFontAndWindowSize(hConsoleOut, 8, 201, 90, true);
 
             // Mostra os creditos
             creditos();
 
             // Formata para o menu
-            setFontAndWindowSize(hConsole, 12, 154, 40, false);
+            setFontAndWindowSize(hConsoleOut, 12, 154, 40, false);
 
             // Limpa a tela e posiciona o cursor
             system("cls");
-            setCmdCursor(0, 0, hConsole);
+            setCmdCursor(0, 0, hConsoleOut);
             break;
 
         case '3': // Exit
@@ -128,7 +129,7 @@ int main()
             break;
 
         default: // Se não for um comando válido, só manda o cursor de volta pro 0,0
-            setCmdCursor(0, 0, hConsole);
+            setCmdCursor(0, 0, hConsoleOut);
             break;
         }
     }
@@ -160,13 +161,13 @@ int main()
     SetConsoleCursorInfo(hConsole, &info);
 
     // Formata a saída para os sprites
-    setFontAndWindowSize(hConsole, 8, 201, 90, true);
+    setFontAndWindowSize(hConsoleOut, 8, 201, 90, true);
 
     // Coloca o cursor em 0,0 e limpa a tela
-    setCmdCursor(0, 0, hConsole);
+    setCmdCursor(0, 0, hConsoleOut);
 
     // INTERAÇÃO COM A RAINHA 1
-    INTERACAO1(hConsole);
+    INTERACAO1(hConsoleOut, hConsoleIn);
 
     system("cls");
 
@@ -187,7 +188,7 @@ int main()
 
     // INICIO DA FASE 2 - MEDIUM
     // Formata a saída para o tabuleiro
-    setFontAndWindowSize(hConsole, 36, 22, 11, false);
+    setFontAndWindowSize(hConsoleOut, 36, 22, 11, false);
 
     // Chama a Fase 2
     FS2(hConsole, &score->proximo->pontos);
@@ -217,6 +218,7 @@ int main()
 
     if (saveFile == NULL)
     {
+
         saveFile = fopen("save/score.bin", "wb");
         fseek(saveFile, 0, SEEK_END);
 
