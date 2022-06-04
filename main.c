@@ -166,7 +166,7 @@ int main()
     setCmdCursor(0, 0, hConsole);
 
     // INTERAÇÃO COM A RAINHA 1
-    // INTERACAO1(hConsole);
+    INTERACAO1(hConsole);
 
     system("cls");
 
@@ -212,29 +212,30 @@ int main()
     // Salva o score do player
     FILE *saveFile;
 
-    // Tenta ler a pontuação
+    // Verifica se o arquivo existe, caso ainda não exista, cria-se o score.bin na pasta "save"
     saveFile = fopen("save/score.bin", "r+b");
 
-    if (saveFile == NULL) // A BOSTA DO ARQUIVO N EXISTE
+    if (saveFile == NULL)
     {
         saveFile = fopen("save/score.bin", "wb");
         fseek(saveFile, 0, SEEK_END);
 
+        // Ordena a lista de pontuações em ordem crescente
         fwrite(score->proximo->nome, sizeof(char), 11, saveFile);
         fwrite(&score->proximo->pontos, sizeof(int), 1, saveFile);
 
         fclose(saveFile);
         printf("feito cpxs");
     }
-    else // A BOSTA DO AQUIVO EXISTE
+    else
     {
         fseek(saveFile, 0, SEEK_SET);
 
         while (true)
         {
-            // AGORA ESSA PORRA DE CORNO TEM UM NOVO ELEMENTO CARALHO
+            // Cria um novo elemento (pontuação)
             createNewElement(score);
-
+            // Caso o score do novo elemento seja maior que o score do primeiro elemento, o novo elemento é colocado
             if (fread(score->proximo->nome, sizeof(char), 11, saveFile) != 11 || fread(&score->proximo->pontos, sizeof(int), 1, saveFile) != 1)
             {
                 deleteFirstElement(score);
@@ -245,13 +246,14 @@ int main()
         pontuacao *smallestElement;
         fseek(saveFile, 0, SEEK_SET);
 
+        // Encontra o menor elemento da lista
         while (true)
         {
             if (score->proximo == NULL)
                 break;
 
             smallestElement = findSmallestScore(score);
-
+            // Organiza os dados do arquivo em binário
             fwrite(smallestElement->nome, sizeof(char), 11, saveFile);
             fwrite(&smallestElement->pontos, sizeof(int), 1, saveFile);
 
