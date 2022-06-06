@@ -69,6 +69,9 @@ void toUpper(char *string);
 #define SPRS_H 91
 #define SPRS_W 201
 #define SPRS_FONT 8
+#define CREDITS_H 90
+#define CREDITS_W 201
+#define CREDITS_FONT 8
 #define SCORE_H 15
 #define SCORE_W 30
 #define SCORE_FONT 32

@@ -102,6 +102,7 @@ int main()
             // Exibe o menu
             showSPR("spr/menu.txt", 0, 42, 154);
 
+            FlushConsoleInputBuffer(hConsoleIn);
             choice = getch();
             switch (choice)
             {
@@ -113,7 +114,7 @@ int main()
                 system("cls");
 
                 // Formata a saída para os sprites
-                setFontAndWindowSize(hConsoleOut, SPRS_FONT, SPRS_W, SPRS_H, true);
+                setFontAndWindowSize(hConsoleOut, CREDITS_FONT, CREDITS_W, CREDITS_H, true);
 
                 // Mostra os creditos
                 creditos(hConsoleIn);
