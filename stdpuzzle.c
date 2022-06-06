@@ -44,7 +44,7 @@ void showScore(HANDLE hConsoleIn, HANDLE hConsoleOut)
             }
             else
             {
-                printf("%10s         %9d  ", nome, pontos);
+                printf(" %-10s         %9d", nome, pontos);
                 i++;
             }
         }
