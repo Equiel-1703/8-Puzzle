@@ -52,7 +52,7 @@ void showBoard(int *board, BYTE *selecBoard, size_t tamanho, HANDLE hConsole)
         for (int j = 0; j < tamanho; j++) // j = colunas
         {
             if (selecBoard[i * tamanho + j])
-                printColored(hConsole, board, i, j, tamanho, FOREGROUND_BLUE | BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
+                printColored(hConsole, board, i, j, tamanho, FOREGROUND_BLUE | BACKGROUND_WHITE);
             else
             {
                 if (board[i * tamanho + j] != 0)
@@ -206,6 +206,7 @@ void showSPR(const char *arquivo, int startLine, int endLine, int lineSize)
     fclose(fp);
 }
 
+// Mostra alguma fala da rainha
 void showFala(char falaNum)
 {
     const char *falaFile = "spr/falas/falas.txt";
@@ -253,7 +254,7 @@ void setMainOutputSettings(HANDLE hConsole)
     conFont.cbSize = sizeof(CONSOLE_FONT_INFOEX);
     conFont.nFont = 0;
     conFont.dwFontSize.X = 0;
-    conFont.dwFontSize.Y = 12;
+    conFont.dwFontSize.Y = MENU_FONT;
     conFont.FontFamily = FF_DONTCARE;
     conFont.FontWeight = FW_NORMAL;
     wcscpy(conFont.FaceName, L"Consolas");
@@ -264,8 +265,8 @@ void setMainOutputSettings(HANDLE hConsole)
     COORD buffer_size;
     SMALL_RECT screen_size;
 
-    buffer_size.X = 154;
-    buffer_size.Y = 40;
+    buffer_size.X = MENU_W;
+    buffer_size.Y = MENU_H;
 
     CONSOLE_SCREEN_BUFFER_INFO buffInfo;
     GetConsoleScreenBufferInfo(hConsole, &buffInfo);
@@ -353,6 +354,31 @@ void setFontAndWindowSize(HANDLE hConsole, int fontSize, int BufferX, int Buffer
     */
 }
 
+// Função de comemoração
+void congratulations(void)
+{
+    for (int i = 0; i < 5; i++)
+    {
+        system("COLOR 07");
+        timer(100);
+        system("COLOR 70");
+        timer(100);
+    }
+}
+
+// Função de derrota
+void youLose(void)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        system("COLOR 04");
+        timer(200);
+        system("COLOR 74");
+        timer(200);
+    }
+    system("COLOR 70"); // Volta para a cor original
+}
+
 // ======================================= FUNÇÕES AUXILIARES =======================================
 
 // Função que imprime colorido a coordenada da board na tela e depois restaura para a cor padrão
@@ -377,17 +403,36 @@ void printColored(HANDLE hConsole, int *board, int linha, int coluna, size_t tam
     SetConsoleTextAttribute(hConsole, saved_attributes);
 }
 
-// Coloca o cursor do console em uma coordenada específica
-void setCmdCursor(int x, int y, HANDLE hConsole)
+// Função que imprime um texto e um numero na tela e depois restaura para a cor padrão
+void printColorTextNum(HANDLE hConsoleOut, WORD atributo, const char *text, int num)
 {
-    if ((hConsole != NULL) && (hConsole != INVALID_HANDLE_VALUE))
+    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+    WORD saved_attributes;
+
+    // Salva os atributos atuais do console
+    GetConsoleScreenBufferInfo(hConsoleOut, &consoleInfo);
+    saved_attributes = consoleInfo.wAttributes;
+
+    // Modifica os atributos do console
+    SetConsoleTextAttribute(hConsoleOut, atributo);
+
+    printf(text, num);
+
+    // Restaura o console para os atributos originais
+    SetConsoleTextAttribute(hConsoleOut, saved_attributes);
+}
+
+// Coloca o cursor do console em uma coordenada específica
+void setCmdCursor(int x, int y, HANDLE hConsoleOut)
+{
+    if ((hConsoleOut != NULL) && (hConsoleOut != INVALID_HANDLE_VALUE))
     {
         COORD coord;
 
         coord.X = x;
         coord.Y = y;
 
-        SetConsoleCursorPosition(hConsole, coord);
+        SetConsoleCursorPosition(hConsoleOut, coord);
     }
 }
 

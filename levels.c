@@ -1,6 +1,6 @@
 #include "stdpuzzle.h"
 
-void FS1(HANDLE hConsole, int *movimentos)
+void FS1(HANDLE hConsoleOut, int *movimentos)
 {
     // FASE 1
     bool temp = true;
@@ -12,19 +12,17 @@ void FS1(HANDLE hConsole, int *movimentos)
     embaralharBoard(board1, SIZE, 1);
     usrSelecBoard usrSelection = createUsrSelectionBoard(SIZE, board1);
 
-    printf("\n");
-
     // Input do usuário
     char usrInput;
-    // Quantidade de movimentos do usuário
+    // Quantidade de movimentos do usuário (temporário)
     int tempMov = 0;
 
     while (temp)
     {
-        setCmdCursor(0, 0, hConsole);
-        showBoard(board1, usrSelection.usrSelecBoard, SIZE, hConsole);
+        setCmdCursor(0, 0, hConsoleOut);
+        showBoard(board1, usrSelection.usrSelecBoard, SIZE, hConsoleOut);
         // Mostra a quantidade de movimentos realizados
-        printf("\n%d\n", tempMov);
+        printf("\n\nMovimentos: %d\n", tempMov);
 
         usrInput = getch();
         switch (usrInput)
@@ -44,45 +42,66 @@ void FS1(HANDLE hConsole, int *movimentos)
 
         // Verifica se o tabuleiro foi resolvido
         if (comparaArray(board1, gabarito, SIZE))
+        {
+            // Se foi resolvido, mostra a última jogada e sai do laço
+            setCmdCursor(0, 0, hConsoleOut);
+            showBoard(board1, usrSelection.usrSelecBoard, SIZE, hConsoleOut);
+            printf("\n\nMovimentos: %d\n", tempMov);
             break;
+        }
     }
+    // Atualiza na lista encadeada a pontuação do usuário
     *movimentos += tempMov;
+    // Desaloca os tabuleiros
     free(board1);
     free(gabarito);
     free(usrSelection.usrSelecBoard);
 }
 
-void FS2(HANDLE hConsole, int *movimentos)
+bool FS2(HANDLE hConsoleOut, int *movimentos)
 {
     // FASE 2
     bool temp = true;
     const int SIZE = 3;
+    const int LIMITMOVS = 250;
 
     // Cria e embaralha a matriz do tabuleiro
-    int *board2 = createBoard(SIZE);
+    int *board1 = createBoard(SIZE);
     int *gabarito = createBoard(SIZE);
-    embaralharBoard(board2, SIZE, 1);
-    usrSelecBoard usrSelection = createUsrSelectionBoard(SIZE, board2);
-
-    printf("\n");
+    embaralharBoard(board1, SIZE, 1);
+    usrSelecBoard usrSelection = createUsrSelectionBoard(SIZE, board1);
 
     // Input do usuário
     char usrInput;
-    // Quantidade de movimentos do usuário
+    // Quantidade de movimentos do usuário (temporário)
     int tempMov = 0;
 
     while (temp)
     {
-        setCmdCursor(0, 0, hConsole);
-        showBoard(board2, usrSelection.usrSelecBoard, SIZE, hConsole);
-        // Mostra a quantidade de movimentos realizados
-        printf("\n%d\n", tempMov);
+        setCmdCursor(0, 0, hConsoleOut);
+        showBoard(board1, usrSelection.usrSelecBoard, SIZE, hConsoleOut);
 
+        // Mostra a quantidade de movimentos realizados
+        printf("\n\nMovimentos: %d\n", tempMov);
+
+        // Limpa a linha
+        CONSOLE_SCREEN_BUFFER_INFO info;
+        GetConsoleScreenBufferInfo(hConsoleOut, &info);
+        eraser(1, 22, ' ');
+        setCmdCursor(info.dwCursorPosition.X, info.dwCursorPosition.Y, hConsoleOut);
+
+        // Mostra os movimentos restantes
+        if ((LIMITMOVS - tempMov) <= 10)
+            printColorTextNum(hConsoleOut, FOREGROUND_RED | BACKGROUND_WHITE, "Restantes: %d", LIMITMOVS - tempMov);
+        else
+            printf("Restantes: %d", LIMITMOVS - tempMov);
+
+        // Aguarda input do usuario1
         usrInput = getch();
         switch (usrInput)
         {
         case ' ':
-            doMove(board2, SIZE, &usrSelection, &tempMov);
+            doMove(board1, SIZE, &usrSelection, &tempMov);
             break;
 
         case 'k':
@@ -90,51 +109,79 @@ void FS2(HANDLE hConsole, int *movimentos)
             break;
 
         default:
-            readSelectPosition(usrInput, board2, &usrSelection, SIZE);
+            readSelectPosition(usrInput, board1, &usrSelection, SIZE);
             break;
         }
 
+        // Mostra o tabuleiro após a jogada
+        setCmdCursor(0, 0, hConsoleOut);
+        showBoard(board1, usrSelection.usrSelecBoard, SIZE, hConsoleOut);
+        printf("\n\nMovimentos: %d\n", tempMov);
+
+        GetConsoleScreenBufferInfo(hConsoleOut, &info);
+        eraser(1, 22, ' ');
+        setCmdCursor(info.dwCursorPosition.X, info.dwCursorPosition.Y, hConsoleOut);
+
+        if ((LIMITMOVS - tempMov) <= 10)
+            printColorTextNum(hConsoleOut, FOREGROUND_RED | BACKGROUND_WHITE, "Restantes: %d", LIMITMOVS - tempMov);
+        else
+            printf("Restantes: %d", LIMITMOVS - tempMov);
+
         // Verifica se o tabuleiro foi resolvido
-        if (comparaArray(board2, gabarito, SIZE))
+        if (comparaArray(board1, gabarito, SIZE))
+        {
+            // Se sim, sai do jogo
             break;
+        }
+        else if ((LIMITMOVS - tempMov) == 0) // Verifica se o jogador perdeu
+        {
+            // Se sim, desaloca os tabuleiros e sai
+            free(board1);
+            free(gabarito);
+            free(usrSelection.usrSelecBoard);
+            // O jogador perdeu
+            return false;
+        }
     }
+    // Atualiza na lista encadeada a pontuação do usuário
     *movimentos += tempMov;
-    free(board2);
+    // Desaloca os tabuleiros
+    free(board1);
     free(gabarito);
     free(usrSelection.usrSelecBoard);
+    // O jogador venceu
+    return true;
 }
 
-void FSF(HANDLE hConsole, int *movimentos)
+void FSF(HANDLE hConsoleOut, int *movimentos)
 {
     // FASE 3
     bool temp = true;
     const int SIZE = 4;
 
     // Cria e embaralha a matriz do tabuleiro
-    int *board3 = createBoard(SIZE);
+    int *board1 = createBoard(SIZE);
     int *gabarito = createBoard(SIZE);
-    embaralharBoard(board3, SIZE, 1);
-    usrSelecBoard usrSelection = createUsrSelectionBoard(SIZE, board3);
-
-    printf("\n");
+    embaralharBoard(board1, SIZE, 1);
+    usrSelecBoard usrSelection = createUsrSelectionBoard(SIZE, board1);
 
     // Input do usuário
     char usrInput;
-    // Quantidade de movimentos do usuário
+    // Quantidade de movimentos do usuário (temporário)
     int tempMov = 0;
 
     while (temp)
     {
-        setCmdCursor(0, 0, hConsole);
-        showBoard(board3, usrSelection.usrSelecBoard, SIZE, hConsole);
+        setCmdCursor(0, 0, hConsoleOut);
+        showBoard(board1, usrSelection.usrSelecBoard, SIZE, hConsoleOut);
         // Mostra a quantidade de movimentos realizados
-        printf("\n%d\n", tempMov);
+        printf("\n\nMovimentos: %d", tempMov);
 
         usrInput = getch();
         switch (usrInput)
         {
         case ' ':
-            doMove(board3, SIZE, &usrSelection, &tempMov);
+            doMove(board1, SIZE, &usrSelection, &tempMov);
             break;
 
         case 'k':
@@ -142,16 +189,24 @@ void FSF(HANDLE hConsole, int *movimentos)
             break;
 
         default:
-            readSelectPosition(usrInput, board3, &usrSelection, SIZE);
+            readSelectPosition(usrInput, board1, &usrSelection, SIZE);
             break;
         }
 
         // Verifica se o tabuleiro foi resolvido
-        if (comparaArray(board3, gabarito, SIZE))
+        if (comparaArray(board1, gabarito, SIZE))
+        {
+            // Se foi resolvido, mostra a última jogada e sai do laço
+            setCmdCursor(0, 0, hConsoleOut);
+            showBoard(board1, usrSelection.usrSelecBoard, SIZE, hConsoleOut);
+            printf("\n\nMovimentos: %d", tempMov);
             break;
+        }
     }
+    // Atualiza na lista encadeada a pontuação do usuário
     *movimentos += tempMov;
-    free(board3);
+    // Desaloca os tabuleiros
+    free(board1);
     free(gabarito);
     free(usrSelection.usrSelecBoard);
 }

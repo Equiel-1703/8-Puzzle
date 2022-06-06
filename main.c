@@ -83,190 +83,230 @@ int main()
     // Configura a formatação do jogo quando ele é aberto pela primeira vez
     setMainOutputSettings(hConsoleOut);
 
-    // Coloca o cursor em 0,0
-    setCmdCursor(0, 0, hConsoleOut);
-
-    // Esconde o cursor
-    CONSOLE_CURSOR_INFO info;
-    info.dwSize = 100;
-    info.bVisible = false;
-    SetConsoleCursorInfo(hConsoleOut, &info);
-
-    // Menu principal
-    char choice;
-    bool i = true;
-    while (i)
+    while (true)
     {
-        // Exibe o menu
-        showSPR("spr/menu.txt", 0, 34, 154);
+        // Coloca o cursor em 0,0
+        setCmdCursor(0, 0, hConsoleOut);
 
-        choice = getch();
-        switch (choice)
+        // Esconde o cursor
+        CONSOLE_CURSOR_INFO info;
+        info.dwSize = 100;
+        info.bVisible = false;
+        SetConsoleCursorInfo(hConsoleOut, &info);
+
+        // Menu principal-
+        char choice;
+        bool i = true;
+        while (i)
         {
-        case '1': // Play
-            i = false;
-            break;
+            // Exibe o menu
+            showSPR("spr/menu.txt", 0, 42, 154);
 
-        case '2': // Credits
-            system("cls");
-
-            // Formata a saída para os sprites
-            setFontAndWindowSize(hConsoleOut, 8, 201, 90, true);
-
-            // Mostra os creditos
-            creditos();
-
-            // Formata para o menu
-            setFontAndWindowSize(hConsoleOut, 12, 154, 40, false);
-
-            // Limpa a tela e posiciona o cursor
-            system("cls");
-            setCmdCursor(0, 0, hConsoleOut);
-            break;
-
-        case '3': // Exit
-            exit(EXIT_SUCCESS);
-            break;
-
-        default: // Se não for um comando válido, só manda o cursor de volta pro 0,0
-            setCmdCursor(0, 0, hConsoleOut);
-            break;
-        }
-    }
-
-    // ======================================= PLAY =======================================
-
-    // Limpa a tela
-    system("cls");
-
-    // Redimensiona o console para pedir o nome do usuario
-    setCmdCursor(0, 0, hConsole);
-    setFontAndWindowSize(hConsole, 28, 40, 10, false);
-
-    // Deixa o cursor visivel
-    info.dwSize = 100;
-    info.bVisible = true;
-    SetConsoleCursorInfo(hConsole, &info);
-
-    // Cria a lista encadeada
-    pontuacao *score;
-    score = (pontuacao *)malloc(sizeof(pontuacao));
-    score->proximo = NULL;
-    // Salva o nome do usuario num novo elemento da lista
-    createScoreElement(score);
-
-    // Esconde o cursor
-    info.dwSize = 100;
-    info.bVisible = false;
-    SetConsoleCursorInfo(hConsole, &info);
-
-    // Formata a saída para os sprites
-    setFontAndWindowSize(hConsoleOut, 8, 201, 90, true);
-
-    // Coloca o cursor em 0,0 e limpa a tela
-    setCmdCursor(0, 0, hConsoleOut);
-
-    // INTERAÇÃO COM A RAINHA 1
-    INTERACAO1(hConsoleOut, hConsoleIn);
-
-    system("cls");
-
-    // INICIO DA FASE 1 - EASY
-    // Formata a saída para o tabuleiro
-    setFontAndWindowSize(hConsole, 36, 22, 11, false);
-
-    // Chama a Fase 1
-    FS1(hConsole, &score->proximo->pontos);
-
-    system("cls");
-    // FINAL DA FASE 1 - EASY
-
-    // INTERAÇÃO 2
-    INTERACAO2(hConsole);
-
-    system("cls");
-
-    // INICIO DA FASE 2 - MEDIUM
-    // Formata a saída para o tabuleiro
-    setFontAndWindowSize(hConsoleOut, 36, 22, 11, false);
-
-    // Chama a Fase 2
-    FS2(hConsole, &score->proximo->pontos);
-
-    system("cls");
-    // FINAL FASE 2 - MEDIUM
-
-    // INTERAÇÃO AEO
-
-    system("cls");
-
-    // INICIO DA FASE FINAL - HARD
-    // Formata a saída para o tabuleiro
-    setFontAndWindowSize(hConsole, 36, 22, 11, false);
-
-    // Chama a Fase Final
-    FSF(hConsole, &score->proximo->pontos);
-
-    system("cls");
-    // FINAL FASE FINAL - HARD
-
-    // Salva o score do player
-    FILE *saveFile;
-
-    // Verifica se o arquivo existe, caso ainda não exista, cria-se o score.bin na pasta "save"
-    saveFile = fopen("save/score.bin", "r+b");
-
-    if (saveFile == NULL)
-    {
-
-        saveFile = fopen("save/score.bin", "wb");
-        fseek(saveFile, 0, SEEK_END);
-
-        // Ordena a lista de pontuações em ordem crescente
-        fwrite(score->proximo->nome, sizeof(char), 11, saveFile);
-        fwrite(&score->proximo->pontos, sizeof(int), 1, saveFile);
-
-        fclose(saveFile);
-        printf("feito cpxs");
-    }
-    else
-    {
-        fseek(saveFile, 0, SEEK_SET);
-
-        while (true)
-        {
-            // Cria um novo elemento (pontuação)
-            createNewElement(score);
-            // Caso o score do novo elemento seja maior que o score do primeiro elemento, o novo elemento é colocado
-            if (fread(score->proximo->nome, sizeof(char), 11, saveFile) != 11 || fread(&score->proximo->pontos, sizeof(int), 1, saveFile) != 1)
+            choice = getch();
+            switch (choice)
             {
-                deleteFirstElement(score);
+            case '1': // Play
+                i = false;
+                break;
+
+            case '2': // Credits
+                system("cls");
+
+                // Formata a saída para os sprites
+                setFontAndWindowSize(hConsoleOut, SPRS_FONT, SPRS_W, SPRS_H, true);
+
+                // Mostra os creditos
+                creditos(hConsoleIn);
+
+                // Limpa a tela
+                system("cls");
+                // Formata para o menu
+                setFontAndWindowSize(hConsoleOut, MENU_FONT, MENU_W, MENU_H, false);
+                // Posiciona o cursor
+                setCmdCursor(0, 0, hConsoleOut);
+                break;
+
+            case '3': // Score
+                system("cls");
+                // Formata a saída para a tela de score
+                setFontAndWindowSize(hConsoleOut, SCORE_FONT, SCORE_W, SCORE_H, false);
+
+                // Posiciona o cursor e chama a função que exibe a pontuação
+                setCmdCursor(0, 0, hConsoleOut);
+                showScore(hConsoleOut, hConsoleOut);
+
+                // Limpa a tela
+                system("cls");
+                // Formata para o menu
+                setFontAndWindowSize(hConsoleOut, MENU_FONT, MENU_W, MENU_H, true);
+                // Posiciona o cursor
+                setCmdCursor(0, 0, hConsoleOut);
+                break;
+
+            case '4': // Exit
+                exit(EXIT_SUCCESS);
+                break;
+
+            default: // Se não for um comando válido, só manda o cursor de volta pro 0,0
+                setCmdCursor(0, 0, hConsoleOut);
                 break;
             }
         }
 
-        pontuacao *smallestElement;
-        fseek(saveFile, 0, SEEK_SET);
+        // ======================================= PLAY =======================================
 
-        // Encontra o menor elemento da lista
-        while (true)
+        // Limpa a tela
+        system("cls");
+
+        // Redimensiona o console para pedir o nome do usuario
+        setCmdCursor(0, 0, hConsoleOut);
+        setFontAndWindowSize(hConsoleOut, 40, 40, 3, false);
+
+        // Deixa o cursor visivel
+        info.dwSize = 100;
+        info.bVisible = true;
+        SetConsoleCursorInfo(hConsoleOut, &info);
+
+        // Cria a lista encadeada
+        pontuacao *score;
+        score = (pontuacao *)malloc(sizeof(pontuacao));
+        score->proximo = NULL;
+        // Salva o nome do usuario num novo elemento da lista
+        createScoreElement(score, hConsoleOut);
+
+        // Esconde o cursor
+        info.dwSize = 100;
+        info.bVisible = false;
+        SetConsoleCursorInfo(hConsoleOut, &info);
+
+        // Formata a saída para os sprites
+        setFontAndWindowSize(hConsoleOut, SPRS_FONT, SPRS_W, SPRS_H, true);
+        // Coloca o cursor em 0,0 e limpa a tela
+        setCmdCursor(0, 0, hConsoleOut);
+
+        // INTERAÇÃO COM A RAINHA 1
+        INTERACAO1(hConsoleOut, hConsoleIn);
+        system("cls");
+
+        // INICIO DA FASE 1 - EASY ----------------------------------
+
+        // Formata a saída para o tabuleiro
+        setFontAndWindowSize(hConsoleOut, FASES_FONT, FS1_W, FS1_H, false);
+        // Chama a Fase 1
+        FS1(hConsoleOut, &score->proximo->pontos);
+        congratulations();
+        system("cls");
+
+        // FINAL DA FASE 1 - EASY ------------------------------------
+
+        // INTERAÇÃO 2
+        INTERACAO2(hConsoleOut, hConsoleIn);
+        system("cls");
+
+        // INICIO DA FASE 2 - MEDIUM --------------------------------
+
+        // Formata a saída para o tabuleiro
+        setFontAndWindowSize(hConsoleOut, FASES_FONT, FS2_W, FS2_H, false);
+
+        // Chama a Fase 2
+        if (!FS2(hConsoleOut, &score->proximo->pontos))
         {
-            if (score->proximo == NULL)
-                break;
-
-            smallestElement = findSmallestScore(score);
-            // Organiza os dados do arquivo em binário
-            fwrite(smallestElement->nome, sizeof(char), 11, saveFile);
-            fwrite(&smallestElement->pontos, sizeof(int), 1, saveFile);
-
-            deleteThisElement(smallestElement, score);
+            // Se ele perde
+            youLose();
+            perdeu(hConsoleOut, hConsoleIn);
+            system("cls");
+            setFontAndWindowSize(hConsoleOut, MENU_FONT, MENU_W, MENU_H, false);
+            continue;
         }
-        fclose(saveFile);
+        // Se ele ganha
+        congratulations();
+        system("cls");
+
+        // FINAL FASE 2 - MEDIUM -------------------------------------
+
+        // INTERAÇÃO 3
+        INTERACAO3(hConsoleOut, hConsoleIn);
+        system("cls");
+
+        // INICIO DA FASE FINAL - HARD
+        // Formata a saída para o tabuleiro
+        setFontAndWindowSize(hConsoleOut, FASES_FONT, FSF_W, FSF_H, false);
+
+        // Chama a Fase Final
+        FSF(hConsoleOut, &score->proximo->pontos);
+        congratulations();
+        system("cls");
+        // FINAL FASE FINAL - HARD
+
+        // INTERAÇÃO FINAL
+        INTERACAOFINAL(hConsoleOut, hConsoleIn);
+        system("cls");
+        setFontAndWindowSize(hConsoleOut, MENU_FONT, MENU_W, MENU_H, false);
+
+        // Salva o score do player
+        FILE *saveFile;
+
+        // Verifica se o arquivo existe
+        saveFile = fopen("save/score.bin", "r+b");
+
+        if (saveFile == NULL) // Se o arquivo não existir
+        {
+            // Caso ainda não exista, cria-se o score.bin na pasta "save"
+            saveFile = fopen("save/score.bin", "wb");
+            fseek(saveFile, 0, SEEK_END);
+
+            // Escreve no arquivo o nome e a pontuação do jogador
+            fwrite(score->proximo->nome, sizeof(char), 11, saveFile);
+            fwrite(&score->proximo->pontos, sizeof(int), 1, saveFile);
+
+            // Fecha o arquivo e desaloca a lista encadeada
+            fclose(saveFile);
+            deleteEntireList(score);
+        }
+        else // Se o arquivo existir
+        {
+            // Posiciona o leitor do arquivo no começo dele
+            fseek(saveFile, 0, SEEK_SET);
+
+            while (true)
+            {
+                // Cria um novo elemento (pontuação)
+                createNewElement(score);
+
+                // Vai lendo os dados do save e salvando no novo elemento criado na lista encadeada
+                if (fread(score->proximo->nome, sizeof(char), 11, saveFile) != 11 || fread(&score->proximo->pontos, sizeof(int), 1, saveFile) != 1)
+                {
+                    // Se não tem mais dados, ele deleta o elemento que sobrou na lista
+                    deleteFirstElement(score);
+                    break;
+                }
+            }
+
+            // Cria um ponteiro para o menor score e reposiciona o cursor de leitura do arquivo no começo
+            pontuacao *smallestElement;
+            fseek(saveFile, 0, SEEK_SET);
+
+            // Escreve em ordem crescente os 10 menores scores
+            for (int i = 0; i < 10; i++)
+            {
+                // Sai do laço se já tiver esvaziado a lista
+                if (score->proximo == NULL)
+                    break;
+
+                // Encontra o menor elemento da lista
+                smallestElement = findSmallestScore(score);
+                // Escreve no arquivo o nome e a pontuação desse menor elemento
+                fwrite(smallestElement->nome, sizeof(char), 11, saveFile);
+                fwrite(&smallestElement->pontos, sizeof(int), 1, saveFile);
+
+                // Deleta o menor elemento encontrado para procurar o menor nos que restaram
+                deleteThisElement(smallestElement, score);
+            }
+
+            // Fecha o arquivo e desaloca a lista
+            fclose(saveFile);
+            deleteEntireList(score);
+        }
     }
-    printf("\nFeito\n");
-    getch();
-
-    // INTERAÇÃO FINAL
-
     return 0;
 }

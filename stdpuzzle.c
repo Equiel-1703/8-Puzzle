@@ -5,15 +5,51 @@
 // ======================================= FUNÇÕES DO GAME =======================================
 
 // Créditos
-void creditos(void)
+void creditos(HANDLE hConsoleIn)
 {
     showSPR("Credits/Ferrao.txt", 0, 89, 201);
+    FlushConsoleInputBuffer(hConsoleIn);
     getch();
     showSPR("Credits/Lisa.txt", 0, 89, 201);
+    FlushConsoleInputBuffer(hConsoleIn);
     getch();
     showSPR("Credits/Daniel.txt", 0, 89, 201);
+    FlushConsoleInputBuffer(hConsoleIn);
     getch();
     showSPR("Credits/Henrique.txt", 0, 89, 201);
+    FlushConsoleInputBuffer(hConsoleIn);
+    getch();
+}
+
+// Ver score
+void showScore(HANDLE hConsoleIn, HANDLE hConsoleOut)
+{
+    printf("           SCORES\n");
+    printf("------------------------------");
+    // printf("ABCDEFGHIJ         123456789");
+    FILE *fp = fopen("save/score.bin", "r");
+    if (fp != NULL)
+    {
+        char nome[11];
+        int pontos, i = 2;
+
+        while (true)
+        {
+            setCmdCursor(0, i, hConsoleOut);
+
+            if (fread(nome, sizeof(char), 11, fp) != 11 ||
+                fread(&pontos, sizeof(int), 1, fp) != 1)
+            {
+                break;
+            }
+            else
+            {
+                printf("%10s         %9d  ", nome, pontos);
+                i++;
+            }
+        }
+    }
+    FlushConsoleInputBuffer(hConsoleIn);
     getch();
 }
 
@@ -186,37 +222,43 @@ void doMove(int *board, size_t tam, usrSelecBoard *boardSel, int *quantMov)
     }
 }
 
-// Função de comemoração
-void congratulations(void)
-{
-    for (int i = 0; i < 5; i++)
-    {
-        system("COLOR 07");
-        timer(100);
-        system("COLOR 70");
-        timer(100);
-    }
-}
-
 // ======================================= FUNÇÕES DE RANKING =======================================
 
-void createScoreElement(pontuacao *score)
+// Pede o nome do usuário e salva no primeiro elemento da lista encadeada
+void createScoreElement(pontuacao *lista, HANDLE hConsoleOut)
 {
     pontuacao *novo;
-
     novo = (pontuacao *)malloc(sizeof(pontuacao));
 
-    printf("DIGITE SEU NOME: ");
+    while (true)
+    {
+        printf("DIGITE SEU NOME: ");
 
-    scanf("%10[^\n]", novo->nome);
-    toUpper(novo->nome);
-    getchar();
+        if (scanf("%10[^\n]", novo->nome) != 1)
+        {
+            while (getchar() != '\n') // Limpa o que sobrou na stdin
+                continue;
+
+            setCmdCursor(0, 0, hConsoleOut);
+            continue;
+        }
+        else
+        {
+            toUpper(novo->nome);
+
+            while (getchar() != '\n') // Limpa o que sobrar na stdin
+                continue;
+
+            break;
+        }
+    }
 
     novo->pontos = 0; // Inicializa os pontos com 0
-    novo->proximo = score->proximo;
-    score->proximo = novo;
+    novo->proximo = lista->proximo;
+    lista->proximo = novo;
 }
 
+// Cria um novo elemento na lista encadeada
 void createNewElement(pontuacao *score)
 {
     pontuacao *novo;
@@ -227,23 +269,24 @@ void createNewElement(pontuacao *score)
     score->proximo = novo;
 }
 
-void deleteFirstElement(pontuacao *score)
+// Deleta o primeiro elemento da lista encadeada
+void deleteFirstElement(pontuacao *lista)
 {
-    pontuacao *temp = score->proximo;
-    score->proximo = score->proximo->proximo;
+    pontuacao *temp = lista->proximo;
+    lista->proximo = lista->proximo->proximo;
     free(temp);
 }
 
+// Encontra o elemento com menor score dentro da lista encadeada
 pontuacao *findSmallestScore(pontuacao *lista)
 {
-    int smallest = INT_MAX;
-    pontuacao *smallestPtr;
+    pontuacao *smallestPtr = lista->proximo;
 
     for (pontuacao *i = lista->proximo; i != NULL; i = i->proximo)
     {
-        if (i->pontos < smallest)
+        if (i->pontos < smallestPtr->pontos)
         {
-            smallest = i->pontos;
+            smallestPtr->pontos = i->pontos;
             smallestPtr = i;
         }
     }
@@ -251,9 +294,17 @@ pontuacao *findSmallestScore(pontuacao *lista)
     return smallestPtr;
 }
 
+// Deleta da lista encadeada o elemento passado por parâmetro
 void deleteThisElement(pontuacao *element, pontuacao *lista)
 {
     pontuacao *i, *j;
+
+    /*
+    O i vai apontar sempre 1 elemento antes do j, isso permite que se faça um loop que vai de
+    elemento em elemento na lista até o j encontrar o elemento a ser deletado. Como i vai ter o
+    endereço do elemento anterior, é só fazer ele apontar para o próximo elemento de j e desalocar
+    o endereço de j.
+    */
 
     for (i = lista, j = lista->proximo; j != element; i = j, j = j->proximo)
     {
@@ -262,6 +313,23 @@ void deleteThisElement(pontuacao *element, pontuacao *lista)
 
     i->proximo = j->proximo;
     free(j);
+}
+
+// Função que deleta a lista encadeada inteira
+void deleteEntireList(pontuacao *lista)
+{
+    pontuacao *tempPtr;
+
+    while (true)
+    {
+        tempPtr = lista;
+
+        if (tempPtr == NULL)
+            break;
+
+        lista = lista->proximo;
+        free(tempPtr);
+    }
 }
 
 // ======================================= FUNÇÕES AUXILIARES =======================================
@@ -301,7 +369,7 @@ bool comparaArray(int *arr1, int *arr2, size_t tamanho)
     return isEqual;
 }
 
-
+// Função que deixa todas as letras da string em maiúsculo
 void toUpper(char *string)
 {
     int i = 0;
@@ -309,21 +377,5 @@ void toUpper(char *string)
     {
         string[i] = toupper(string[i]);
         i++;
-    }
-}
-
-// Função que limpa o buffer do teclado
-void clearKeyboardBuffer(void)
-{
-    fseek(stdin, 0, SEEK_END);
-    if (ftell(stdin) > 0)
-    {
-        rewind(stdin);
-        char c;
-        while ((c = getchar()) != EOF)
-        {
-            continue;
-        }
-
     }
 }
