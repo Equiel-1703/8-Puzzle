@@ -66,7 +66,7 @@ void toUpper(char *string);
 #define MENU_H 45
 #define MENU_W 154
 #define MENU_FONT 12
-#define SPRS_H 90
+#define SPRS_H 91
 #define SPRS_W 201
 #define SPRS_FONT 8
 #define SCORE_H 15
