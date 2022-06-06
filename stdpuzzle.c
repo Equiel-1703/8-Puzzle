@@ -292,7 +292,6 @@ pontuacao *findSmallestScore(pontuacao *lista)
     {
         if (i->pontos < smallestPtr->pontos)
         {
-            smallestPtr->pontos = i->pontos;
             smallestPtr = i;
         }
     }

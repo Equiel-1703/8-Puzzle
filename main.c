@@ -186,7 +186,7 @@ int main()
         setCmdCursor(0, 0, hConsoleOut);
 
         // INTERAÇÃO COM A RAINHA 1
-        INTERACAO1(hConsoleOut, hConsoleIn);
+        // INTERACAO1(hConsoleOut, hConsoleIn);
         system("cls");
 
         // INICIO DA FASE 1 - EASY ----------------------------------
@@ -201,7 +201,7 @@ int main()
         // FINAL DA FASE 1 - EASY ------------------------------------
 
         // INTERAÇÃO 2
-        INTERACAO2(hConsoleOut, hConsoleIn);
+        // INTERACAO2(hConsoleOut, hConsoleIn);
         system("cls");
 
         // INICIO DA FASE 2 - MEDIUM --------------------------------
@@ -226,7 +226,7 @@ int main()
         // FINAL FASE 2 - MEDIUM -------------------------------------
 
         // INTERAÇÃO 3
-        INTERACAO3(hConsoleOut, hConsoleIn);
+        // INTERACAO3(hConsoleOut, hConsoleIn);
         system("cls");
 
         // INICIO DA FASE FINAL - HARD
@@ -240,7 +240,7 @@ int main()
         // FINAL FASE FINAL - HARD
 
         // INTERAÇÃO FINAL
-        INTERACAOFINAL(hConsoleOut, hConsoleIn);
+        // INTERACAOFINAL(hConsoleOut, hConsoleIn);
         system("cls");
         setFontAndWindowSize(hConsoleOut, MENU_FONT, MENU_W, MENU_H, false);
 
