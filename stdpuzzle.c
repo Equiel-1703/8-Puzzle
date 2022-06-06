@@ -24,9 +24,15 @@ void creditos(HANDLE hConsoleIn)
 // Ver score
 void showScore(HANDLE hConsoleIn, HANDLE hConsoleOut)
 {
-    printf("           SCORES\n");
+    char *s = "SCORES";
+    int pad = (30 - strlen(s)) / 2;
+    printf("%*s%s%*s\n", pad, "", s, pad, "");
+
+    setCmdCursor(0, 1, hConsoleOut);
+
     printf("------------------------------");
     // printf("ABCDEFGHIJ         123456789");
+
     FILE *fp = fopen("save/score.bin", "r");
     if (fp != NULL)
     {
