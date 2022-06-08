@@ -171,6 +171,7 @@ void readSelectPosition(char usrInput, int *board, usrSelecBoard *selecBoard, si
     // Movimentação
     switch (usrInput)
     {
+    case 'W':
     case 'w': // Cima
         if (selecBoard->selecPos.Y - 1 >= 0)
         {
@@ -180,6 +181,7 @@ void readSelectPosition(char usrInput, int *board, usrSelecBoard *selecBoard, si
         }
         break;
 
+    case 'S':
     case 's': // Baixo
         if (selecBoard->selecPos.Y + 1 < tamanho)
         {
@@ -189,6 +191,7 @@ void readSelectPosition(char usrInput, int *board, usrSelecBoard *selecBoard, si
         }
         break;
 
+    case 'A':
     case 'a': // Esquerda
         if (selecBoard->selecPos.X - 1 >= 0)
         {
@@ -198,6 +201,7 @@ void readSelectPosition(char usrInput, int *board, usrSelecBoard *selecBoard, si
         }
         break;
 
+    case 'D':
     case 'd': // Direita
         if (selecBoard->selecPos.X + 1 < tamanho)
         {
