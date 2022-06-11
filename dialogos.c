@@ -96,7 +96,7 @@ void INTERACAO1(HANDLE hConsoleOut, HANDLE hConsoleIn)
 void INTERACAO2(HANDLE hConsoleOut, HANDLE hConsoleIn)
 {
     // Formata a saída para os sprites
-    setFontAndWindowSize(hConsoleOut, 8, 201, 90, true);
+    setFontAndWindowSize(hConsoleOut, SPRS_FONT, SPRS_W, SPRS_H, true);
 
     // Posiciona o cursor
     setCmdCursor(0, 0, hConsoleOut);
@@ -171,7 +171,7 @@ void INTERACAO2(HANDLE hConsoleOut, HANDLE hConsoleIn)
 void INTERACAO3(HANDLE hConsoleOut, HANDLE hConsoleIn)
 {
     // Formata a saída para os sprites
-    setFontAndWindowSize(hConsoleOut, 8, 201, 90, true);
+    setFontAndWindowSize(hConsoleOut, SPRS_FONT, SPRS_W, SPRS_H, true);
 
     // Posiciona o cursor
     setCmdCursor(0, 0, hConsoleOut);
@@ -231,7 +231,7 @@ void INTERACAO3(HANDLE hConsoleOut, HANDLE hConsoleIn)
 void INTERACAOFINAL(HANDLE hConsoleOut, HANDLE hConsoleIn)
 {
     // Formata a saída para os sprites
-    setFontAndWindowSize(hConsoleOut, 8, 201, 90, true);
+    setFontAndWindowSize(hConsoleOut, SPRS_FONT, SPRS_W, SPRS_H, true);
 
     // Posiciona o cursor
     setCmdCursor(0, 0, hConsoleOut);
@@ -303,7 +303,7 @@ void INTERACAOFINAL(HANDLE hConsoleOut, HANDLE hConsoleIn)
 void perdeu(HANDLE hConsoleOut, HANDLE hConsoleIn)
 {
     // Formata a saída para os sprites
-    setFontAndWindowSize(hConsoleOut, 8, 201, 90, true);
+    setFontAndWindowSize(hConsoleOut, SPRS_FONT, SPRS_W, SPRS_H, true);
 
     // Posiciona o cursor
     setCmdCursor(0, 0, hConsoleOut);
