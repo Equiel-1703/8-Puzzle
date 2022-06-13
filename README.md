@@ -6,6 +6,8 @@
  
  Esse visual de texto foi inspirado nos jogos da década de 70, onde os computadores não possuíam a capacidade de exibir sprites de bitmaps. Portanto, os programadores eram limitados a fazer jogos que utilizavam apenas os caracteres disponíveis na máquina como gráficos. Isso não só foi um desafio muito legal para o desenvolvimento, como também deu um toque retrô ao jogo final.
  
+ Você pode assitir um mini documentário sobre o desenvolvimento do jogo com um pouco mais de detalhes [aqui](https://www.youtube.com/watch?v=UIjoTUqt1Y4).
+ 
  Esperamos que gostem!
  
 ## Feito por:
