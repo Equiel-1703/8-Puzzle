@@ -1,8 +1,14 @@
 # 8-Puzze
 
- Trabalho final da disciplina de Programação de Computadores do curso de Ciência da Computação da UFPel.
+ Esse projeto foi o trabalho final da disciplina de Programação de Computadores do curso de bacharel em ciência da computação da UFPel, mestrada pelo professor Marilton Sanchotene de Aguiar.
  
- Feito por:
+ O trabalho consiste em um jogo de três fases inspiradas no tradicional 8-Puzzle (ou Jogo do Quinze, como é conhecido no Brasil) com o objetivo do jogador derrotar a rainha de Seyon e se tornar o novo rei. O jogo possui uma interface baseada totalmente em texto, projetada para ser confortável de se jogar e ao mesmo tempo um diferencial no aspecto visual do jogo.
+ 
+ Esse visual de texto foi inspirado nos jogos da década de 70, onde os computadores não possuíam a capacidade de exibir sprites de bitmaps. Portanto, os programadores eram limitados a fazer jogos que utilizavam apenas os caracteres disponíveis na máquina como gráficos. Isso não só foi um desafio muito legal para o desenvolvimento, como também deu um toque retrô ao jogo final.
+ 
+ Esperamos que gostem!
+ 
+## Feito por:
  
   1. Daniel Lisboa
   2. Elisa Lopes
