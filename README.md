@@ -1,4 +1,4 @@
-# 8-Puzze
+# 8-puzzle
 
  Esse projeto foi o trabalho final da disciplina de Programação de Computadores do curso de bacharel em ciência da computação da UFPel, mestrada pelo professor Marilton Sanchotene de Aguiar.
  
