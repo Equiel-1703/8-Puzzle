@@ -10,6 +10,12 @@
  
  Esperamos que gostem!
  
+ # Controles
+ 
+ W, A, S, D - Controlam a seleção de peças no game.
+ 
+ ESPAÇO - Move uma peça para o espaço vazio adjacente.
+ 
 ## Feito por:
  
   1. Daniel Lisboa
